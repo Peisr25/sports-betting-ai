@@ -4,7 +4,7 @@
 
 👉 **CLIQUE AQUI PARA CRIAR O PR:**
 
-https://github.com/Peisr25/sports-betting-ai/compare/main...claude/sports-betting-ai-setup-011CUcfcssPzX1m1tEeMqexN
+https://github.com/Peisr25/sports-betting-ai/compare/sports-betting-ai-setup-011CUcfcssPzX1m1tEeMqexN...claude/sports-betting-ai-setup-011CUcfcssPzX1m1tEeMqexN
 
 ---
 
@@ -12,7 +12,7 @@ https://github.com/Peisr25/sports-betting-ai/compare/main...claude/sports-bettin
 
 ### Título:
 ```
-feat: Complete Sports Betting AI with Lite and Pro versions using football-data.org
+feat: Complete Sports Betting AI System with football-data.org API
 ```
 
 ### Descrição (copie e cole):
@@ -53,26 +53,30 @@ Sistema completo de predição de apostas esportivas com **duas versões**: Lite
 ✅ **Análise de Valor (EV)** - Identifica apostas lucrativas
 ✅ **Critério de Kelly** - Gestão otimizada de banca
 ✅ **Banco de Dados SQLite** - Histórico persistente
+✅ **Coleta de Dados Históricos** - Script para download de match history (rate limit safe)
+✅ **HISTORY_MATCHES Configurável** - Personalize número de partidas para análise via .env
 ✅ **7+ Mercados** - Análise completa multi-mercado
 ✅ **Backtesting** - Framework para testar estratégias
 ✅ **Recomendações Automáticas** - Sistema de value betting
+✅ **Python 3.13 Suportado** - Compatibilidade com versões mais recentes
 
 ### Arquivos Principais
 - `pro/python_api/models/xgboost_model.py` (8.5KB) - XGBoost ML
 - `pro/python_api/models/ensemble.py` (11KB) - Sistema Ensemble
 - `pro/python_api/analysis/value_analysis.py` (7.6KB) - Análise EV
 - `pro/python_api/data/database.py` (3.7KB) - SQLite ORM
+- `pro/python_api/collect_historical_data.py` - Coleta de dados com rate limiting (6.5s delays)
 
 ---
 
 ## 📚 Documentação
 
 - **README.md** - Visão geral e comparação (atualizado)
-- **COMPARISON.md** (4.4KB) - Comparação detalhada Lite vs Pro
-- **INSTALL.md** (1.2KB) - Instalação rápida em 5 minutos
-- **TROUBLESHOOTING.md** (9.5KB) - Guia completo de troubleshooting
-- **lite/README_LITE.md** (8.7KB) - Guia completo da versão Lite
-- **pro/README_PRO.md** (12KB) - Guia completo da versão Pro
+- **TROUBLESHOOTING.md** - Guia completo de troubleshooting (inclui Python 3.13)
+- **HISTORICAL_DATA_GUIDE.md** - Guia de coleta de dados históricos
+- **lite/README_LITE.md** - Guia completo da versão Lite
+- **pro/README_PRO.md** - Guia completo da versão Pro (atualizado com Python 3.13)
+- **CREATE_PR.md** - Este arquivo com instruções do PR
 
 ---
 
@@ -129,10 +133,10 @@ sports-betting-ai/
 ## 📊 Estatísticas
 
 ### Commits
-- **3 commits** incluídos neste PR
-- **36 arquivos alterados** (33 + 3 de diagnóstico)
-- **5,272 linhas inseridas**
-- **111 linhas deletadas**
+- **6 commits** incluídos neste PR
+- **50+ arquivos alterados**
+- **3,000+ linhas de código**
+- Inclui: Sistema completo + Diagnóstico + Coleta Histórica + Python 3.13 fix
 
 ### Arquivos
 - **Versão Lite**: 17 arquivos
@@ -352,15 +356,34 @@ Ambas as versões (Lite e Pro) estão testadas, documentadas e prontas para prod
 ## 🎯 Resumo dos Commits
 
 ### Commit 1: Sistema Principal (769289d)
+- feat: Add complete Sports Betting AI system with Lite and Pro versions
 - 33 arquivos (Lite + Pro)
-- Sistema completo implementado
+- Sistema completo com Poisson e Ensemble
 
 ### Commit 2: Instruções PR (cf08040)
+- docs: Add PR instructions for manual creation
 - Documentação para criação manual do PR
 
 ### Commit 3: Ferramentas Diagnóstico (6d0f277)
-- Scripts de validação e troubleshooting
+- docs: Add diagnostic tools and troubleshooting guide
+- test_api_key.py, setup_env.py, TROUBLESHOOTING.md
+
+### Commit 4: Instruções PR v2 (7c99377)
+- docs: Add PR instructions for manual creation
+- Atualização das instruções
+
+### Commit 5: Dados Históricos (047a8e6)
+- feat: Add historical data collection system and configurable match history
+- collect_historical_data.py
+- HISTORICAL_DATA_GUIDE.md
+- HISTORY_MATCHES configurável via .env
+
+### Commit 6: Python 3.13 Fix (fbc9852)
+- fix: Update requirements for Python 3.13 compatibility
+- requirements.txt atualizado (numpy>=1.26.0, pandas>=2.1.0, etc.)
+- requirements-py312.txt para versões antigas
+- TROUBLESHOOTING.md atualizado
 
 ---
 
-**Total: 36 arquivos | 5,272 linhas | 3 commits**
+**Total: 50+ arquivos | 3,000+ linhas | 6 commits**
