@@ -1,158 +1,242 @@
-> [!IMPORTANT]
-> Para o correto funcionamento deste projeto, é crucial que você possua uma chave de API válida para a [API-Football](https://www.api-football.com/). O plano gratuito oferece 100 requisições por dia, o que é suficiente para testes e uso moderado.
+# Sports Betting AI - Complete Package
 
-# Sports Betting AI - Agente de Apostas Esportivas
+Sistema completo de análise e predição de apostas esportivas com **2 versões**: Lite (gratuita) e Pro (profissional).
 
-Este projeto é um sistema completo de análise e recomendação de apostas esportivas, projetado para ser flexível e poderoso. Ele utiliza uma arquitetura híbrida que combina a orquestração de workflows do **n8n** com o poder de processamento de um **script Python local** para cálculos de Machine Learning.
+## 📦 O que está incluído?
 
-O sistema é capaz de coletar estatísticas detalhadas de times de futebol, processar esses dados, e utilizar um modelo de IA (ensemble de Poisson e XGBoost) para gerar probabilidades e recomendações de apostas para diversos mercados, como resultado final, total de gols, cartões e escanteios.
+### 🌟 Versão LITE (Gratuita)
+- ✅ Modelo de Poisson para predições
+- ✅ API REST com FastAPI
+- ✅ API football-data.org (tier gratuito)
+- ✅ 3 mercados de apostas principais
+- ✅ Scripts prontos para usar
+- ✅ SEM banco de dados (tudo em memória)
 
-## Arquitetura do Sistema
+### 🚀 Versão PRO (Profissional)
+- ✅ Tudo da versão Lite +
+- ✅ Modelo XGBoost (Machine Learning)
+- ✅ Sistema Ensemble (combina Poisson + XGBoost)
+- ✅ Análise de Valor Esperado (EV)
+- ✅ Critério de Kelly para gestão de banca
+- ✅ Banco de dados SQLite
+- ✅ 7+ mercados de apostas
+- ✅ Backtesting de estratégias
 
-A solução é dividida em dois componentes principais que trabalham em conjunto:
+## 🏆 Competições Suportadas
 
-1.  **API Python (Backend de IA)**: O cérebro do sistema, responsável por todo o processamento pesado. Ele é construído com FastAPI e inclui:
-    *   **Coleta de Dados**: Módulo que se conecta à API-Football para buscar estatísticas de ligas, times e partidas.
-    *   **Processamento e Feature Engineering**: Transforma dados brutos em features relevantes para o modelo de IA.
-    *   **Modelagem de IA**: Utiliza um modelo *ensemble* que combina a robustez estatística da **Distribuição de Poisson** para mercados de gols com a precisão de um modelo de **Machine Learning (XGBoost)** para mercados mais complexos (cartões, escanteios, etc.).
-    *   **Banco de Dados**: Armazena dados em um banco de dados SQLite local para rápido acesso e para evitar chamadas repetidas à API.
-    *   **API REST**: Expõe endpoints para que o n8n (ou qualquer outro cliente) possa solicitar predições e acionar atualizações de dados.
+| Código | Competição | País |
+|--------|------------|------|
+| **PL** | Premier League | 🏴󐁧󐁢󐁥󐁮󐁧󐁿 Inglaterra |
+| **BSA** | Brasileirão Série A | 🇧🇷 Brasil |
+| **PD** | La Liga | 🇪🇸 Espanha |
+| **BL1** | Bundesliga | 🇩🇪 Alemanha |
+| **SA** | Serie A | 🇮🇹 Itália |
+| **FL1** | Ligue 1 | 🇫🇷 França |
+| **CL** | Champions League | 🇪🇺 Europa |
 
-2.  **Workflows n8n (Frontend e Orquestração)**: Atua como a camada de interface e automação. O projeto inclui dois workflows pré-construídos:
-    *   **Workflow de Predição**: Um webhook que recebe a partida desejada pelo usuário, chama a API Python para obter as análises e retorna um JSON formatado com as probabilidades e recomendações.
-    *   **Workflow de Atualização**: Um workflow agendado (executa diariamente) que aciona a API Python para atualizar o banco de dados local com os últimos resultados e estatísticas, garantindo que as predições sejam sempre baseadas em dados recentes.
+## 🚀 Início Rápido
 
-Para uma visão mais aprofundada da arquitetura, consulte o documento [ARCHITECTURE.md](./docs/ARCHITECTURE.md).
+### 1. Escolha sua versão
 
-## Funcionalidades
-
--   **Análise Multi-Mercado**: Gera probabilidades para uma vasta gama de mercados:
-    -   Resultado Final (Vitória/Empate/Derrota)
-    -   Total de Gols (Over/Under)
-    -   Ambos Marcam (Sim/Não)
-    -   Total de Cartões (Over/Under)
-    -   Total de Escanteios (Over/Under)
-    -   Total de Faltas (Over/Under)
--   **Recomendações Claras**: Fornece recomendações de aposta com nível de confiança (Muito Alta, Alta, Média) e uma breve justificativa.
--   **Modelo Híbrido (Ensemble)**: Combina modelos estatísticos e de Machine Learning para predições mais precisas e robustas.
--   **Sistema Automatizado**: O n8n gerencia as requisições do usuário e a atualização periódica dos dados de forma automática.
--   **Flexível e Extensível**: A arquitetura modular permite adicionar novas ligas, novos mercados de aposta e até mesmo novos modelos de IA com facilidade.
--   **Gerenciamento de API**: O sistema controla o número de requisições à API-Football para se manter dentro dos limites do plano utilizado.
-
-## Estrutura do Projeto
-
-```
-sports-betting-ai/
-│
-├── python_api/              # Contém todo o código do backend Python
-│   ├── app.py                 # Servidor da API (FastAPI)
-│   ├── models/                # Modelos de IA (Poisson, ML, Ensemble)
-│   ├── data/                  # Módulos de coleta, processamento e DB
-│   ├── prediction/            # Engine de predição
-│   ├── config.py              # Configurações do sistema
-│   ├── requirements.txt       # Dependências Python
-│   └── .env.example           # Arquivo de exemplo para variáveis de ambiente
-│
-├── n8n_workflows/           # Contém os workflows para importação no n8n
-│   ├── betting_prediction.json
-│   └── data_update.json
-│
-├── database/                # Diretório onde o banco de dados será criado
-│   └── sports_betting.db      # (Criado na primeira execução)
-│
-├── docs/                    # Documentação detalhada
-│   ├── ARCHITECTURE.md
-│   ├── API_DOCUMENTATION.md
-│   ├── N8N_SETUP.md
-│   └── USER_GUIDE.md
-│
-└── README.md                # Este arquivo
+**Lite** - Para testes e aprendizado:
+```bash
+cd lite/
 ```
 
-## Como Começar
+**Pro** - Para uso profissional:
+```bash
+cd pro/
+```
 
-Para colocar o sistema em funcionamento, siga os passos abaixo.
-
-### Pré-requisitos
-
--   Python 3.10 ou superior
--   Acesso a uma instância do n8n (Cloud ou Self-hosted)
--   Uma chave de API da [API-Football](https://www.api-football.com/)
-
-### 1. Configurar o Backend Python
-
-Clone ou faça o download deste repositório para sua máquina local.
+### 2. Instale as dependências
 
 ```bash
-# Navegue até o diretório da API
-cd sports-betting-ai/python_api
-
-# Crie um ambiente virtual (recomendado)
+cd python_api
 python -m venv venv
-source venv/bin/activate  # No Windows: venv\Scripts\activate
-
-# Instale as dependências
+source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
-
-# Renomeie o arquivo .env.example para .env
-cp .env.example .env
 ```
 
-Abra o arquivo `.env` recém-criado e adicione sua chave da API-Football:
+### 3. Configure a API Key
 
-```dotenv
-# .env
-API_FOOTBALL_KEY=sua_chave_de_api_aqui
-```
+1. Registre-se em: https://www.football-data.org/client/register
+2. Copie o `.env.example`:
+   ```bash
+   cp .env.example .env
+   ```
+3. Adicione sua chave no `.env`:
+   ```
+   FOOTBALL_DATA_API_KEY=sua_chave_aqui
+   ```
 
-### 2. Iniciar a API Python
-
-Com as dependências instaladas e a chave de API configurada, inicie o servidor:
+### 4. Inicie o servidor
 
 ```bash
-# A partir do diretório python_api/
-uvicorn app:app --host 0.0.0.0 --port 5000
+python app.py
 ```
 
-O servidor estará rodando em `http://localhost:5000`. Você pode acessar a documentação interativa da API em `http://localhost:5000/docs`.
+Acesse: **http://localhost:5000/docs**
 
-### 3. Configurar os Workflows no n8n
+## 📊 Comparação Lite vs Pro
 
-Agora, importe os workflows para sua instância do n8n.
+| Recurso | Lite | Pro |
+|---------|------|-----|
+| Modelo de Poisson | ✅ | ✅ |
+| Modelo XGBoost | ❌ | ✅ |
+| Sistema Ensemble | ❌ | ✅ |
+| Análise de Valor (EV) | ❌ | ✅ |
+| Critério de Kelly | ❌ | ✅ |
+| Banco de Dados | ❌ | ✅ SQLite |
+| Mercados Básicos | 3 | 7+ |
+| Backtesting | ❌ | ✅ |
+| Recomendações Auto | Básicas | Avançadas |
 
-1.  No seu painel do n8n, vá em **Workflows**.
-2.  Clique em **Import from File**.
-3.  Selecione os arquivos `betting_prediction.json` e `data_update.json` do diretório `n8n_workflows/` e importe-os um de cada vez.
+## 📖 Documentação
 
-Para instruções detalhadas sobre como configurar e ativar os workflows, consulte o guia [N8N_SETUP.md](./docs/N8N_SETUP.md).
+Cada versão inclui documentação completa:
 
-### 4. Popular o Banco de Dados (Primeira Execução)
+- `README_LITE.md` / `README_PRO.md` - Guia completo
+- `docs/API_DOCUMENTATION.md` - Referência da API
+- `docs/USER_GUIDE.md` - Guia do usuário
+- `docs/N8N_SETUP.md` - Integração com n8n
 
-Para que o sistema possa fazer predições, ele precisa de dados históricos. Use o endpoint `/update` para popular o banco de dados pela primeira vez. Você pode fazer isso com uma ferramenta como o `curl` ou diretamente pelo n8n.
+## 🎯 Exemplos de Uso
+
+### Predição Simples (Lite ou Pro)
 
 ```bash
-curl -X POST http://localhost:5000/update -H "Content-Type: application/json" -d '{
-  "league": "Brasileirão Série A",
-  "season": 2025
-}'
+cd examples/
+python easy_predict.py Arsenal Chelsea PL
 ```
 
-Este processo pode levar alguns minutos, pois ele está buscando dados da API-Football e salvando-os localmente.
+### Análise de Valor (Pro)
 
-### 5. Fazer sua Primeira Predição
+```bash
+python value_analysis_example.py Arsenal Chelsea PL
+```
 
-Com tudo configurado, você pode fazer uma predição! Use o webhook do n8n ou chame a API diretamente.
+### Predições em Lote
 
-Para instruções detalhadas sobre como usar o sistema, consulte o [USER_GUIDE.md](./docs/USER_GUIDE.md).
+```bash
+python jogos_e_predicoes.py BSA 5
+```
 
-## Limitações e Próximos Passos
+## 🔬 Modelos Disponíveis
 
--   **Treinamento de Modelo**: O modelo de Machine Learning (XGBoost) neste projeto é fornecido como uma estrutura. Para obter predições de alta qualidade, é necessário treinar o modelo com um grande volume de dados históricos. Um script de treinamento pode ser desenvolvido como um próximo passo.
--   **Odds de Apostas**: O sistema atualmente não compara as probabilidades calculadas com as odds oferecidas pelas casas de apostas. Integrar uma API de odds para calcular o **valor esperado (EV)** seria uma melhoria significativa.
--   **Cobertura de Ligas**: O sistema está pré-configurado para algumas das principais ligas, mas pode ser facilmente estendido para outras, bastando adicionar o ID da liga no arquivo de configuração.
+### Modelo de Poisson (Lite e Pro)
+- Distribuição estatística clássica
+- Ideal para predição de gols
+- Rápido e eficiente
+- Não requer treinamento
 
-## Contribuições
+### Modelo XGBoost (Pro)
+- Machine Learning de alto desempenho
+- Aprende com dados históricos
+- Considera múltiplas features
+- Precisa ser treinado
 
-Contribuições são bem-vindas! Sinta-se à vontade para abrir uma *issue* ou enviar um *pull request*.
+### Sistema Ensemble (Pro)
+- Combina Poisson + XGBoost
+- Média ponderada de predições
+- Maior precisão
+- Reduz viés de modelo único
 
+## 💡 Recursos Avançados (Pro)
 
+### Análise de Valor Esperado
+```python
+EV = (Probabilidade × Retorno) - (Probabilidade de Perda × Stake)
+```
+- Identifica apostas com valor positivo
+- Lucrativo no longo prazo
+- Considera odds das casas
+
+### Critério de Kelly
+```python
+Kelly % = (odds × probability - 1) / (odds - 1)
+```
+- Gestão de banca otimizada
+- Maximiza crescimento logarítmico
+- Minimiza risco de ruína
+
+## ⚙️ Requisitos
+
+### Versão Lite
+- Python 3.8+
+- 2GB RAM
+- 1GB espaço em disco
+- API Key gratuita (100 req/dia)
+
+### Versão Pro
+- Python 3.10+
+- 4GB RAM
+- 2GB espaço em disco
+- API Key (plano pago recomendado)
+
+## 🐛 Problemas Comuns
+
+### "API key inválida"
+- Verifique o arquivo `.env`
+- Confirme que a key está ativa
+
+### "Limite de requisições atingido"
+- Tier gratuito: 10 req/min, 100/dia
+- Aguarde ou faça upgrade
+
+### "Time não encontrado"
+- Use nomes parciais: "Arsenal", "Flamengo"
+- Verifique a competição correta
+
+## ⚠️ Aviso Legal
+
+1. **Uso Educacional**: Sistema para fins educacionais e de pesquisa
+2. **Sem Garantias**: Predições não garantem lucros
+3. **Responsabilidade**: Aposte apenas o que pode perder
+4. **Legalidade**: Verifique se apostas são legais em sua região
+
+## 📞 Suporte
+
+- Documentação: `/docs` em cada versão
+- API Docs: http://localhost:5000/docs
+- GitHub Issues: Para reportar problemas
+
+## 🆙 Migração Lite → Pro
+
+1. Copie seu `.env` da versão Lite
+2. Instale dependências da Pro
+3. Treine o modelo XGBoost (opcional)
+4. Ajuste pesos do Ensemble
+5. Configure banco de dados
+
+## 📄 Estrutura do Projeto
+
+```
+sports-betting-ai-complete/
+├── README.md                    ← Você está aqui
+├── COMPARISON.md                ← Comparação detalhada
+├── INSTALL.md                   ← Instalação rápida
+│
+├── lite/                        ← Versão Gratuita
+│   ├── README_LITE.md
+│   ├── python_api/
+│   ├── examples/
+│   └── docs/
+│
+└── pro/                         ← Versão Profissional
+    ├── README_PRO.md
+    ├── python_api/
+    ├── examples/
+    └── docs/
+```
+
+## 🙏 Créditos
+
+- **API de Dados**: [football-data.org](https://www.football-data.org)
+- **Frameworks**: FastAPI, XGBoost, SQLAlchemy
+- **Inspiração**: Comunidade de análise esportiva
+
+---
+
+**Desenvolvido com ❤️ para a comunidade**
+
+*Última atualização: Outubro 2025*

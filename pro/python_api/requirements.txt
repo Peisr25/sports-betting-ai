@@ -1,0 +1,32 @@
+# Sports Betting AI - Versão PRO
+# Python 3.10+
+
+# Web Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.0
+
+# HTTP Requests
+requests==2.31.0
+
+# Environment Variables
+python-dotenv==1.0.0
+
+# CORS
+python-multipart==0.0.6
+
+# Machine Learning
+numpy==1.24.3
+pandas==2.0.3
+scikit-learn==1.3.2
+xgboost==2.0.3
+
+# Database
+sqlalchemy==2.0.23
+
+# Utilities
+python-dateutil==2.8.2
+joblib==1.3.2
+
+# Analysis
+scipy==1.11.4
