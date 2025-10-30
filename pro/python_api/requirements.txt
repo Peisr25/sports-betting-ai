@@ -1,5 +1,6 @@
 # Sports Betting AI - Versão PRO
-# Python 3.10+
+# Python 3.10+ (Recomendado: Python 3.11 ou 3.12)
+# Python 3.13+ suportado (requer versões atualizadas das bibliotecas ML)
 
 # Web Framework
 fastapi==0.104.1
@@ -15,11 +16,11 @@ python-dotenv==1.0.0
 # CORS
 python-multipart==0.0.6
 
-# Machine Learning
-numpy==1.24.3
-pandas==2.0.3
-scikit-learn==1.3.2
-xgboost==2.0.3
+# Machine Learning (versões compatíveis com Python 3.13)
+numpy>=1.26.0        # Python 3.13 requer numpy 1.26+ (removeu distutils)
+pandas>=2.1.0        # Compatível com numpy 1.26+
+scikit-learn>=1.4.0  # Python 3.13 compatível
+xgboost>=2.0.3       # Versão estável com Python 3.13
 
 # Database
 sqlalchemy==2.0.23
@@ -29,4 +30,4 @@ python-dateutil==2.8.2
 joblib==1.3.2
 
 # Analysis
-scipy==1.11.4
+scipy>=1.11.4
