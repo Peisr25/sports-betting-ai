@@ -14,6 +14,13 @@ Versão profissional com Ensemble (Poisson + XGBoost), análise de valor esperad
 
 ## 📦 Instalação
 
+### Requisitos
+
+- **Python 3.10+** (Recomendado: 3.11 ou 3.12)
+- Python 3.13 suportado (usa versões atualizadas das bibliotecas)
+
+### Passos
+
 ```bash
 cd pro/python_api
 python -m venv venv
@@ -23,6 +30,8 @@ cp .env.example .env
 # Edite .env com sua API key
 python app.py
 ```
+
+⚠️ **Python 3.13:** Se encontrar erro `ModuleNotFoundError: No module named 'distutils'`, veja [TROUBLESHOOTING.md](../../TROUBLESHOOTING.md#-erro-python-313---modulenotfounderror-no-module-named-distutils)
 
 ## 🎓 Modelos Disponíveis
 

@@ -254,6 +254,54 @@ Deve mostrar sua API key completa.
 
 ---
 
+## 🐍 Erro Python 3.13 - ModuleNotFoundError: No module named 'distutils'
+
+### Problema
+
+Se você está usando **Python 3.13+** e recebe o erro ao instalar dependências da versão **Pro**:
+
+```
+ERROR: Exception:
+[...]
+ModuleNotFoundError: No module named 'distutils'
+```
+
+**Causa:** Python 3.13 removeu o módulo `distutils` que era usado por versões antigas de bibliotecas como numpy 1.24.3.
+
+### ✅ Solução
+
+O arquivo `requirements.txt` foi atualizado para Python 3.13. Basta instalar normalmente:
+
+```bash
+cd pro/python_api
+pip install -r requirements.txt
+```
+
+As novas versões são:
+- `numpy>=1.26.0` (primeira versão compatível com Python 3.13)
+- `pandas>=2.1.0`
+- `scikit-learn>=1.4.0`
+- `xgboost>=2.0.3`
+
+### 🔄 Alternativa: Usar Python 3.12 ou 3.11
+
+Se você prefere usar as versões exatas testadas originalmente:
+
+```bash
+cd pro/python_api
+
+# Instalar com as versões originais (Python 3.10-3.12)
+pip install -r requirements-py312.txt
+```
+
+### 📝 Notas
+
+- **Versão Lite** não tem este problema (não usa numpy/ML)
+- **Python 3.11 ou 3.12** é recomendado para máxima compatibilidade
+- **Python 3.13** é suportado com as versões atualizadas
+
+---
+
 ## 📞 Suporte
 
 - Documentação football-data.org: https://www.football-data.org/documentation/quickstart

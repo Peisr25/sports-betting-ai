@@ -32,8 +32,16 @@ class Config:
     CACHE_TTL_SECONDS = 300  # 5 minutos
 
     # Predições
-    DEFAULT_HISTORY_MATCHES = 10  # Número de partidas para análise
-    MIN_CONFIDENCE_THRESHOLD = 0.55  # Confiança mínima para recomendações
+    # Número de partidas usadas para calcular estatísticas de cada time
+    # Valores recomendados:
+    #   - 5-10: Análise rápida (forma recente)
+    #   - 10-15: Padrão (equilíbrio) ✓ RECOMENDADO
+    #   - 20-30: Análise detalhada (tendências)
+    #   - 38+: Temporada completa (use com database!)
+    # Na versão Pro, com database, você pode usar 50+ partidas sem custo de API
+    DEFAULT_HISTORY_MATCHES = int(os.getenv("HISTORY_MATCHES", "15"))
+
+    MIN_CONFIDENCE_THRESHOLD = 0.55  # Confiança mínima para recomendações (55%)
 
     # Competições suportadas
     SUPPORTED_COMPETITIONS = {
