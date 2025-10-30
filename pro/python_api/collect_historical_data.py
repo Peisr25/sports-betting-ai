@@ -10,7 +10,7 @@ import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from data.collector import FootballDataCollector
-from data.database import Database
+from data.database import Database, Match
 
 
 class HistoricalDataCollector:
@@ -163,7 +163,7 @@ class HistoricalDataCollector:
                 match_id = match.get("id")
 
                 # Verifica se já existe
-                existing = self.db.session.query(self.db.Match).filter_by(
+                existing = self.db.session.query(Match).filter_by(
                     match_id=match_id
                 ).first()
 
@@ -198,12 +198,12 @@ class HistoricalDataCollector:
         from sqlalchemy import func
 
         query = self.db.session.query(
-            func.count(self.db.Match.id).label('total_matches'),
-            func.count(func.distinct(self.db.Match.competition)).label('competitions')
+            func.count(Match.id).label('total_matches'),
+            func.count(func.distinct(Match.competition)).label('competitions')
         )
 
         if competition:
-            query = query.filter(self.db.Match.competition == competition)
+            query = query.filter(Match.competition == competition)
 
         result = query.first()
 

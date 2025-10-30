@@ -133,10 +133,10 @@ sports-betting-ai/
 ## 📊 Estatísticas
 
 ### Commits
-- **6 commits** incluídos neste PR
+- **8 commits** incluídos neste PR
 - **50+ arquivos alterados**
 - **3,000+ linhas de código**
-- Inclui: Sistema completo + Diagnóstico + Coleta Histórica + Python 3.13 fix
+- Inclui: Sistema completo + Diagnóstico + Coleta Histórica + Python 3.13 fix + Database fix
 
 ### Arquivos
 - **Versão Lite**: 17 arquivos
@@ -384,6 +384,15 @@ Ambas as versões (Lite e Pro) estão testadas, documentadas e prontas para prod
 - requirements-py312.txt para versões antigas
 - TROUBLESHOOTING.md atualizado
 
+### Commit 7: Atualização Instruções PR (9f02d2d)
+- docs: Update PR instructions with all 6 commits and new features
+- CREATE_PR.md atualizado com todas as funcionalidades
+
+### Commit 8: Fix Database Import (5195448)
+- fix: Import Match model correctly in collect_historical_data.py
+- Corrige AttributeError ao usar collect_historical_data.py
+- Importa Match diretamente do módulo database
+
 ---
 
-**Total: 50+ arquivos | 3,000+ linhas | 6 commits**
+**Total: 50+ arquivos | 3,000+ linhas | 8 commits**
