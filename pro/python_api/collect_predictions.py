@@ -10,7 +10,14 @@ As predições incluem:
 - Análise H2H
 
 Uso:
-python collect_predictions.py BSA --season 2024 --days 7
+    # Por código de liga
+    python collect_predictions.py BSA --season 2024 --days 7
+
+    # Por ID de liga (descubra IDs com find_available_fixtures.py)
+    python collect_predictions.py --league-id 39 --season 2024 --days 7
+
+    # Buscar fixtures disponíveis primeiro
+    python find_available_fixtures.py
 """
 import sys
 import os
@@ -26,8 +33,9 @@ from data.database_v2 import Database
 
 def collect_predictions_for_league(
     api_key: str,
-    league_code: str,
-    season: int,
+    league_code: str = None,
+    league_id: int = None,
+    season: int = 2024,
     days_ahead: int = 7
 ):
     """
@@ -35,38 +43,52 @@ def collect_predictions_for_league(
 
     Args:
         api_key: API key da API-Football
-        league_code: Código da liga (BSA, PL, etc)
+        league_code: Código da liga (BSA, PL, etc) - Opcional se league_id fornecido
+        league_id: ID da liga na API-Football - Opcional se league_code fornecido
         season: Temporada
         days_ahead: Quantos dias à frente buscar
 
     Returns:
-        Lista de predições coletadas
+        Dict com estatísticas da coleta
     """
     collector = APIFootballCollector(api_key)
     db = Database("database/betting_v2.db")
 
-    # Mapeamento de ligas
-    league_mapping = {
-        "BSA": 71,
-        "PL": 39,
-        "PD": 140,
-        "BL1": 78,
-        "SA": 135,
-        "FL1": 61,
-        "CL": 2,
-        "PPL": 94,
-        "DED": 88,
-    }
+    # Determinar league_id
+    if league_id:
+        # Usa ID direto
+        actual_league_id = league_id
+        display_name = f"League ID {league_id}"
+    elif league_code:
+        # Mapeamento de códigos para IDs
+        league_mapping = {
+            "BSA": 71,
+            "PL": 39,
+            "PD": 140,
+            "BL1": 78,
+            "SA": 135,
+            "FL1": 61,
+            "CL": 2,
+            "PPL": 94,
+            "DED": 88,
+        }
 
-    league_id = league_mapping.get(league_code)
-    if not league_id:
-        print(f"❌ Liga {league_code} não encontrada")
-        return []
+        actual_league_id = league_mapping.get(league_code)
+        if not actual_league_id:
+            print(f"❌ Liga {league_code} não encontrada no mapeamento")
+            print("\nUse --league-id para especificar ID diretamente")
+            print("Ou execute: python find_available_fixtures.py")
+            return {}
+
+        display_name = league_code
+    else:
+        print("❌ Especifique league_code ou league_id")
+        return {}
 
     print(f"\n{'='*70}")
-    print(f"COLETA DE PREDIÇÕES - {league_code}")
+    print(f"COLETA DE PREDIÇÕES - {display_name}")
     print(f"{'='*70}")
-    print(f"Liga: {league_code}")
+    print(f"Liga ID: {actual_league_id}")
     print(f"Temporada: {season}")
     print(f"Período: Próximos {days_ahead} dias")
     print(f"{'='*70}\n")
@@ -82,14 +104,14 @@ def collect_predictions_for_league(
         print("📋 Buscando fixtures agendados...")
 
         fixtures = collector.get_fixtures(
-            league_id=league_id,
+            league_id=actual_league_id,
             season=season,
             status="NS"  # Not Started
         )
 
         if not fixtures:
-            print(f"⚠️  Nenhum fixture agendado encontrado para {league_code}")
-            return []
+            print(f"⚠️  Nenhum fixture agendado encontrado para {display_name}")
+            return stats
 
         # Filtrar por data (próximos X dias)
         today = datetime.now()
@@ -107,7 +129,7 @@ def collect_predictions_for_league(
         print(f"✓ Encontrados {len(filtered_fixtures)} fixtures nos próximos {days_ahead} dias\n")
 
         if not filtered_fixtures:
-            return []
+            return stats
 
         # Para cada fixture, buscar predição
         for i, fixture in enumerate(filtered_fixtures, 1):
@@ -145,7 +167,7 @@ def collect_predictions_for_league(
 
                 # Salvar predição
                 prediction_data = response[0]
-                saved = _save_prediction_to_db(db, fixture, prediction_data, league_code)
+                saved = _save_prediction_to_db(db, fixture, prediction_data, display_name)
 
                 if saved:
                     print(f"  ✓ Predição salva")
@@ -258,7 +280,14 @@ def main():
 
     parser.add_argument(
         "league",
-        help="Código da liga (BSA, PL, PD, BL1, SA, FL1, CL, PPL, DED)"
+        nargs="?",
+        help="Código da liga (BSA, PL, PD, BL1, SA, FL1, CL, PPL, DED) - Opcional se usar --league-id"
+    )
+
+    parser.add_argument(
+        "--league-id",
+        type=int,
+        help="ID da liga na API-Football (ex: 39 para Premier League). Use find_available_fixtures.py para descobrir IDs"
     )
 
     parser.add_argument(
@@ -282,6 +311,10 @@ def main():
 
     args = parser.parse_args()
 
+    # Validar parâmetros
+    if not args.league and not args.league_id:
+        parser.error("Especifique 'league' ou --league-id")
+
     # Obter API key
     api_key = args.apif_key or os.getenv("API_FOOTBALL_KEY")
 
@@ -296,6 +329,7 @@ def main():
     stats = collect_predictions_for_league(
         api_key=api_key,
         league_code=args.league,
+        league_id=args.league_id,
         season=args.season,
         days_ahead=args.days
     )
