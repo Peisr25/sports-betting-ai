@@ -55,6 +55,11 @@ Sistema completo de predição de apostas esportivas com **duas versões**: Lite
 ✅ **Banco de Dados SQLite** - Histórico persistente
 ✅ **Coleta de Dados Históricos** - Script para download de match history (rate limit safe)
 ✅ **HISTORY_MATCHES Configurável** - Personalize número de partidas para análise via .env
+✅ **DUAL-API System** 🚀 **NOVO!** - Combina 2 APIs para dados completos:
+   - football-data.org (fixtures básicos)
+   - API-Football v3 (30+ métricas: corners, fouls, shots, possession, xG)
+✅ **Estatísticas Detalhadas** - Escanteios, faltas, chutes, posse de bola, passes
+✅ **Novos Mercados** - Corners Over/Under, Cards Over/Under
 ✅ **7+ Mercados** - Análise completa multi-mercado
 ✅ **Backtesting** - Framework para testar estratégias
 ✅ **Recomendações Automáticas** - Sistema de value betting
@@ -66,6 +71,10 @@ Sistema completo de predição de apostas esportivas com **duas versões**: Lite
 - `pro/python_api/analysis/value_analysis.py` (7.6KB) - Análise EV
 - `pro/python_api/data/database.py` (3.7KB) - SQLite ORM
 - `pro/python_api/collect_historical_data.py` - Coleta de dados com rate limiting (6.5s delays)
+- `pro/python_api/data/database_v2.py` 🆕 - Database expandido (30+ métricas)
+- `pro/python_api/data/api_football_collector.py` 🆕 - Cliente API-Football v3
+- `pro/python_api/data/hybrid_collector.py` 🆕 - Sistema híbrido dual-API
+- `pro/python_api/collect_dual_api.py` 🆕 - Script de coleta dual-API
 
 ---
 
@@ -74,6 +83,12 @@ Sistema completo de predição de apostas esportivas com **duas versões**: Lite
 - **README.md** - Visão geral e comparação (atualizado)
 - **TROUBLESHOOTING.md** - Guia completo de troubleshooting (inclui Python 3.13)
 - **HISTORICAL_DATA_GUIDE.md** - Guia de coleta de dados históricos
+- **DUAL_API_GUIDE.md** 🆕 - Guia completo do sistema DUAL-API
+  - Estratégia híbrida (2 APIs)
+  - Setup e configuração
+  - Exemplos de uso
+  - Queries SQL avançadas
+  - Novos mercados (corners, cards)
 - **lite/README_LITE.md** - Guia completo da versão Lite
 - **pro/README_PRO.md** - Guia completo da versão Pro (atualizado com Python 3.13)
 - **CREATE_PR.md** - Este arquivo com instruções do PR
@@ -133,10 +148,10 @@ sports-betting-ai/
 ## 📊 Estatísticas
 
 ### Commits
-- **10 commits** incluídos neste PR
-- **50+ arquivos alterados**
-- **3,000+ linhas de código**
-- Inclui: Sistema completo + Diagnóstico + Coleta Histórica + Python 3.13 fix + Database fix + Season filtering
+- **12 commits** incluídos neste PR
+- **55+ arquivos alterados**
+- **5,000+ linhas de código**
+- Inclui: Sistema completo + Diagnóstico + Coleta Histórica + Python 3.13 fix + Database fix + Season filtering + **DUAL-API System** 🚀
 
 ### Arquivos
 - **Versão Lite**: 17 arquivos
@@ -405,6 +420,40 @@ Ambas as versões (Lite e Pro) estão testadas, documentadas e prontas para prod
 - HISTORICAL_DATA_GUIDE.md: Seção sobre temporadas e filtros de data
 - **Resolve:** 2025 retornando 0 partidas (temporada futura)
 
+### Commit 11: Atualização Instruções PR (815e431)
+- docs: Update PR instructions with season filtering fix
+
+### Commit 12: Sistema DUAL-API (20b5665) 🚀 **MAJOR FEATURE**
+- feat: Add DUAL-API system combining football-data.org + API-Football v3
+- **Novo database expandido** (database_v2.py):
+  - Suporta IDs de ambas as APIs
+  - Tabela match_statistics (30+ métricas: corners, fouls, shots, possession)
+  - Tabela match_events (eventos cronológicos: gols, cartões)
+  - Tabela match_odds (probabilidades de casas de apostas)
+- **Novo coletor API-Football v3** (api_football_collector.py):
+  - Cliente completo para API-Football v3
+  - Fixtures, estatísticas, eventos, escalações, odds
+  - Rate limiting integrado
+- **Sistema híbrido** (hybrid_collector.py):
+  - Combina dados de ambas as APIs inteligentemente
+  - football-data.org para fixtures básicos (economiza quota)
+  - API-Football v3 para estatísticas detalhadas
+  - Matching automático de IDs entre APIs
+- **Script de coleta** (collect_dual_api.py):
+  - Interface CLI fácil: `--with-stats --with-events`
+  - Mostra uso das APIs e quotas
+  - Modo dry-run para testes
+- **Documentação completa** (DUAL_API_GUIDE.md):
+  - Guia de estratégia e setup
+  - Exemplos de uso e queries SQL
+  - Gestão de quotas
+  - Novos mercados de apostas (corners, cards)
+- **Benefícios:**
+  - ✅ 10x mais dados por partida
+  - ✅ Predições mais precisas com features ricas
+  - ✅ Novos mercados (escanteios, cartões)
+  - ✅ Gestão inteligente de quotas
+
 ---
 
-**Total: 50+ arquivos | 3,000+ linhas | 10 commits**
+**Total: 55+ arquivos | 5,000+ linhas | 12 commits**
