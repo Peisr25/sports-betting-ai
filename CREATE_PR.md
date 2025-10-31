@@ -133,10 +133,10 @@ sports-betting-ai/
 ## 📊 Estatísticas
 
 ### Commits
-- **8 commits** incluídos neste PR
+- **10 commits** incluídos neste PR
 - **50+ arquivos alterados**
 - **3,000+ linhas de código**
-- Inclui: Sistema completo + Diagnóstico + Coleta Histórica + Python 3.13 fix + Database fix
+- Inclui: Sistema completo + Diagnóstico + Coleta Histórica + Python 3.13 fix + Database fix + Season filtering
 
 ### Arquivos
 - **Versão Lite**: 17 arquivos
@@ -393,6 +393,18 @@ Ambas as versões (Lite e Pro) estão testadas, documentadas e prontas para prod
 - Corrige AttributeError ao usar collect_historical_data.py
 - Importa Match diretamente do módulo database
 
+### Commit 9: Atualização Instruções PR (f2436e5)
+- docs: Update PR instructions with database fix commit
+- CREATE_PR.md atualizado
+
+### Commit 10: Filtro de Temporada (e937dc1)
+- feat: Add season date filtering to historical data collection
+- Adiciona parâmetros date_from/date_to em get_team_matches_history()
+- Filtra partidas por período da temporada (Agosto a Julho)
+- Mensagens informativas quando não há partidas da temporada
+- HISTORICAL_DATA_GUIDE.md: Seção sobre temporadas e filtros de data
+- **Resolve:** 2025 retornando 0 partidas (temporada futura)
+
 ---
 
-**Total: 50+ arquivos | 3,000+ linhas | 8 commits**
+**Total: 50+ arquivos | 3,000+ linhas | 10 commits**

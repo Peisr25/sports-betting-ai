@@ -71,6 +71,15 @@ class HistoricalDataCollector:
 
         start_time = time.time()
 
+        # Calcula datas da temporada
+        # Temporadas de futebol geralmente vão de agosto a maio do ano seguinte
+        # Para 2024: agosto/2024 a maio/2025
+        # Para 2025: agosto/2025 a maio/2026
+        date_from = f"{season}-08-01"
+        date_to = f"{season + 1}-07-31"
+
+        print(f"Período: {date_from} a {date_to}\n")
+
         try:
             # 1. Buscar times da competição
             print("📋 Buscando times...")
@@ -88,13 +97,18 @@ class HistoricalDataCollector:
                 print(f"[{i}/{len(teams)}] Coletando dados de: {team_name}")
 
                 try:
-                    # Buscar partidas do time
+                    # Buscar partidas do time com filtro de data
                     matches = self.collector.get_team_matches_history(
                         team_id,
-                        last_n=50  # Máximo permitido pela API
+                        last_n=50,  # Máximo permitido pela API
+                        date_from=date_from,
+                        date_to=date_to
                     )
 
                     stats["requests_made"] += 1
+
+                    # Mostrar quantas partidas foram retornadas pela API
+                    total_matches = len(matches)
 
                     # Salvar no banco
                     if save_to_db:
@@ -104,7 +118,13 @@ class HistoricalDataCollector:
                             season
                         )
                         stats["matches_collected"] += saved_count
-                        print(f"  ✓ Salvas {saved_count} partidas no banco")
+
+                        if saved_count == 0 and total_matches > 0:
+                            print(f"  ⚠️ 0 partidas salvas (encontradas {total_matches}, mas todas já existem ou fora da temporada)")
+                        elif saved_count == 0:
+                            print(f"  ℹ️ 0 partidas (nenhuma partida na temporada {season}/{season+1})")
+                        else:
+                            print(f"  ✓ Salvas {saved_count} partidas no banco (de {total_matches} encontradas)")
                     else:
                         stats["matches_collected"] += len(matches)
                         print(f"  ✓ Coletadas {len(matches)} partidas")
@@ -145,6 +165,14 @@ class HistoricalDataCollector:
             for error in stats["errors"][:5]:  # Mostra apenas os 5 primeiros
                 print(f"  - {error}")
 
+        # Mensagem informativa sobre temporadas
+        if stats["matches_collected"] == 0:
+            print(f"\nℹ️  NOTA: Temporada {season}/{season+1} ({date_from} a {date_to})")
+            print("   Se nenhuma partida foi encontrada, pode ser porque:")
+            print("   - A temporada ainda não começou")
+            print("   - Todas as partidas já estavam no banco de dados")
+            print("   - A API não tem dados disponíveis para este período")
+
         print(f"{'='*70}\n")
 
         return stats
@@ -171,6 +199,19 @@ class HistoricalDataCollector:
                     continue  # Pula duplicatas
 
                 # Extrai dados da partida
+                match_date_str = match.get("utcDate", "")
+                match_date = datetime.fromisoformat(
+                    match_date_str.replace('Z', '+00:00')
+                )
+
+                # Filtra por temporada (dupla verificação)
+                # Temporadas vão de agosto do ano X a julho do ano X+1
+                season_start = datetime(season, 8, 1)
+                season_end = datetime(season + 1, 7, 31, 23, 59, 59)
+
+                if not (season_start <= match_date <= season_end):
+                    continue  # Pula partidas fora da temporada
+
                 match_data = {
                     "match_id": match_id,
                     "competition": competition,
@@ -178,9 +219,7 @@ class HistoricalDataCollector:
                     "away_team": match.get("awayTeam", {}).get("name", "Unknown"),
                     "home_score": match.get("score", {}).get("fullTime", {}).get("home"),
                     "away_score": match.get("score", {}).get("fullTime", {}).get("away"),
-                    "match_date": datetime.fromisoformat(
-                        match.get("utcDate", "").replace('Z', '+00:00')
-                    ),
+                    "match_date": match_date,
                     "status": match.get("status", "UNKNOWN")
                 }
 
