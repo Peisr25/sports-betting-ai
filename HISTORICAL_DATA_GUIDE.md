@@ -150,6 +150,95 @@ print(f"Partidas do Flamengo: {len(flamengo_matches)}")
 
 ---
 
+## 🗓️ Entendendo Temporadas e Filtros de Data
+
+### Como Funcionam as Temporadas
+
+O script `collect_historical_data.py` agora filtra automaticamente por temporada:
+
+**Temporadas de Futebol:**
+- Temporada 2024: **Agosto/2024 a Julho/2025**
+- Temporada 2025: **Agosto/2025 a Julho/2026**
+
+```bash
+# Coleta apenas partidas entre 01/08/2024 e 31/07/2025
+python collect_historical_data.py BSA --season 2024
+
+# Coleta apenas partidas entre 01/08/2025 e 31/07/2026
+python collect_historical_data.py BSA --season 2025
+```
+
+### ⚠️ Por Que 2025 Retorna 0 Partidas?
+
+Se você coletar dados de **2024** e funcionar, mas **2025** retornar 0 partidas:
+
+**Motivos possíveis:**
+
+1. **Temporada ainda não começou** 🗓️
+   - Temporada 2025/2026 começa em agosto de 2025
+   - Se estamos em 2024, não há partidas futuras!
+
+2. **Partidas já estavam no banco** 💾
+   - O script evita duplicatas
+   - Se você já coletou essas partidas antes, elas são puladas
+
+3. **API não tem dados disponíveis** 📡
+   - A API football-data.org pode não ter dados futuros
+   - Dados históricos são mais confiáveis
+
+### 🔍 Verificando o Que Foi Coletado
+
+```bash
+# Exemplo de saída quando não há partidas da temporada:
+[1/20] Coletando dados de: Flamengo
+  ℹ️ 0 partidas (nenhuma partida na temporada 2025/2026)
+
+[2/20] Coletando dados de: Palmeiras
+  ⚠️ 0 partidas salvas (encontradas 50, mas todas já existem ou fora da temporada)
+```
+
+**Interpretação:**
+- `ℹ️ 0 partidas`: API não retornou partidas neste período
+- `⚠️ 0 partidas salvas (encontradas X)`: Partidas encontradas, mas:
+  - Já existem no banco de dados, OU
+  - Estão fora do período da temporada solicitada
+
+### ✅ Coletando Dados do Passado
+
+```bash
+# ✅ Funciona - Temporada já aconteceu
+python collect_historical_data.py BSA --season 2023
+python collect_historical_data.py BSA --season 2024
+
+# ❓ Pode não funcionar - Temporada futura
+python collect_historical_data.py BSA --season 2025  # Depende da data atual
+
+# ❌ Não funciona - Temporada muito no futuro
+python collect_historical_data.py BSA --season 2030
+```
+
+### 📊 Verificando Dados no Banco
+
+```python
+from data.database import Database
+
+db = Database("database/betting.db")
+
+# Ver todas as partidas
+all_matches = db.get_matches(limit=1000)
+print(f"Total de partidas: {len(all_matches)}")
+
+# Filtrar por competição
+bsa_matches = db.get_matches(competition="BSA", limit=1000)
+print(f"Partidas do Brasileirão: {len(bsa_matches)}")
+
+# Ver datas das partidas
+for match in bsa_matches[:5]:
+    print(f"{match.match_date} - {match.home_team} vs {match.away_team}")
+```
+
+---
+
 ## 📈 Como Aumentar o Número de Partidas Usadas
 
 ### Opção 1: Alterar Configuração Global

@@ -176,7 +176,9 @@ class FootballDataCollector:
         self,
         team_id: int,
         last_n: int = 10,
-        status: str = "FINISHED"
+        status: str = "FINISHED",
+        date_from: str = None,
+        date_to: str = None
     ) -> List[Dict]:
         """
         Busca histórico de partidas de um time
@@ -185,6 +187,8 @@ class FootballDataCollector:
             team_id: ID do time
             last_n: Número de partidas (limitado pela API)
             status: Status das partidas
+            date_from: Data inicial (YYYY-MM-DD) - opcional
+            date_to: Data final (YYYY-MM-DD) - opcional
 
         Returns:
             Lista de partidas
@@ -193,6 +197,11 @@ class FootballDataCollector:
             "status": status,
             "limit": last_n
         }
+
+        if date_from:
+            params["dateFrom"] = date_from
+        if date_to:
+            params["dateTo"] = date_to
 
         data = self._make_request(f"teams/{team_id}/matches", params)
         matches = data.get("matches", [])
