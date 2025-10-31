@@ -148,10 +148,10 @@ sports-betting-ai/
 ## 📊 Estatísticas
 
 ### Commits
-- **12 commits** incluídos neste PR
+- **13 commits** incluídos neste PR
 - **55+ arquivos alterados**
 - **5,000+ linhas de código**
-- Inclui: Sistema completo + Diagnóstico + Coleta Histórica + Python 3.13 fix + Database fix + Season filtering + **DUAL-API System** 🚀
+- Inclui: Sistema completo + Diagnóstico + Coleta Histórica + Python 3.13 fix + Database fix + Season filtering + **DUAL-API System** 🚀 + Merge com main
 
 ### Arquivos
 - **Versão Lite**: 17 arquivos
@@ -454,6 +454,11 @@ Ambas as versões (Lite e Pro) estão testadas, documentadas e prontas para prod
   - ✅ Novos mercados (escanteios, cartões)
   - ✅ Gestão inteligente de quotas
 
+### Commit 13: Merge com Main (542df2e)
+- Merge origin/main into claude/sports-betting-ai-setup-011CUcfcssPzX1m1tEeMqexN
+- Resolvido conflito em pro/.env.example (mantida versão com DUAL-API)
+- Integradas mudanças da main (.gitignore, remoção de arquivos duplicados)
+
 ---
 
-**Total: 55+ arquivos | 5,000+ linhas | 12 commits**
+**Total: 55+ arquivos | 5,000+ linhas | 13 commits**
