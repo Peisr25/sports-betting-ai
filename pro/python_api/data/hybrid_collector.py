@@ -66,6 +66,10 @@ class HybridCollector:
             "events_saved": 0
         }
 
+        # Flag para indicar se API-Football está disponível
+        self.apif_available = True
+        self.apif_skip_reason = None
+
     def collect_match_comprehensive(
         self,
         competition_code: str,
@@ -131,8 +135,8 @@ class HybridCollector:
 
                 print(f"\n[{i}/{len(fd_matches)}] {match_data['home_team']} vs {match_data['away_team']}")
 
-                # Se temos API-Football configurada, buscar dados extras
-                if self.apif_collector and match_obj.match_id_fd:
+                # Se temos API-Football configurada E ela está disponível, buscar dados extras
+                if self.apif_collector and match_obj.match_id_fd and self.apif_available:
 
                     # Tentar encontrar o fixture correspondente na API-Football
                     apif_fixture_id = self._find_apif_fixture(
@@ -158,6 +162,12 @@ class HybridCollector:
                     else:
                         print(f"  ⚠️ Fixture não encontrado na API-Football")
 
+                elif self.apif_collector and not self.apif_available:
+                    # API-Football está desabilitada devido a restrições do plano
+                    if i == 1:  # Só mostrar uma vez no primeiro match
+                        print(f"\n  ⚠️  API-Football DESABILITADA: {self.apif_skip_reason}")
+                        print(f"  ℹ️  Continuando com dados básicos da football-data.org...\n")
+
                 matches_saved.append(match_obj)
 
                 # Rate limiting: espera entre partidas
@@ -177,6 +187,13 @@ class HybridCollector:
         print(f"Eventos salvos: {self.stats['events_saved']}")
         print(f"Requisições football-data.org: {self.stats['fd_requests']}")
         print(f"Requisições API-Football: {self.stats['apif_requests']}")
+
+        # Aviso se API-Football foi desabilitada
+        if not self.apif_available and self.apif_skip_reason:
+            print(f"\n⚠️  API-Football foi desabilitada durante a coleta")
+            print(f"   Razão: {self.apif_skip_reason}")
+            print(f"   ✓ Todos os dados básicos foram salvos com sucesso")
+
         print(f"{'='*70}\n")
 
         return matches_saved
@@ -246,11 +263,40 @@ class HybridCollector:
         date_str = match.match_date.strftime("%Y-%m-%d")
 
         try:
-            fixtures = self.apif_collector.get_fixtures(
-                league_id=apif_league_id,
-                date=date_str
-            )
+            # Chamar API diretamente para ter acesso aos errors
+            params = {
+                "league": apif_league_id,
+                "date": date_str
+            }
+
+            data = self.apif_collector._make_request("fixtures", params)
             self.stats["apif_requests"] += 1
+
+            # Verificar se há erro de restrição de plano
+            errors = data.get("errors")
+            if errors:
+                error_dict = errors if isinstance(errors, dict) else {}
+
+                # Detectar erro de acesso restrito ao plano
+                if error_dict.get("plan") and "Free plans do not have access" in str(error_dict.get("plan")):
+                    self.apif_available = False
+                    self.apif_skip_reason = error_dict.get("plan")
+
+                    print(f"\n{'='*70}")
+                    print("⚠️  RESTRIÇÃO DE PLANO DETECTADA NA API-FOOTBALL")
+                    print(f"{'='*70}")
+                    print(f"Mensagem: {self.apif_skip_reason}")
+                    print(f"\n💡 AÇÃO: Desabilitando requisições à API-Football")
+                    print(f"   ✓ Dados básicos da football-data.org continuarão sendo coletados")
+                    print(f"   ✓ Economizando quota da API-Football")
+                    print(f"\n   Para acessar datas mais antigas:")
+                    print(f"   1. Upgrade para plano pago da API-Football")
+                    print(f"   2. Ou colete apenas dados das datas permitidas")
+                    print(f"{'='*70}\n")
+
+                    return None
+
+            fixtures = data.get("response", [])
 
             # Procurar match pelos nomes dos times
             for fixture in fixtures:
