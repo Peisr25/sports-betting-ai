@@ -10,15 +10,18 @@ import uvicorn
 
 from data.collector import FootballDataCollector
 from data.database import Database
+from data.database_v2 import Database as DatabaseV2
+from features.api_predictions_features import APIPredictionFeatures
 from models.poisson import PoissonModel
 from models.ensemble import EnsembleModel
+from models.xgboost_model import XGBoostModel
 from analysis.value_analysis import ValueAnalyzer
 from config import config, validate_config
 
 app = FastAPI(
     title="Sports Betting AI - PRO",
-    description="API avançada com Ensemble, XGBoost e análise de valor",
-    version="2.0.0-pro"
+    description="API avançada com Ensemble, XGBoost e análise de valor + API-Football",
+    version="3.0.0-pro"
 )
 
 app.add_middleware(
@@ -31,9 +34,40 @@ app.add_middleware(
 
 # Inicializa componentes
 collector = FootballDataCollector(config.FOOTBALL_DATA_API_KEY)
-ensemble = EnsembleModel()
-value_analyzer = ValueAnalyzer()
 database = Database()
+
+# NOVO: Database V2 com suporte a predições da API
+database_v2 = DatabaseV2("database/betting_v2.db")
+feature_extractor = APIPredictionFeatures(database_v2)
+
+# NOVO: Ensemble com suporte a API-Football
+# Tenta carregar XGBoost se existir modelo treinado
+xgboost_model = None
+try:
+    import os
+    import glob
+    model_files = glob.glob("models/saved/xgboost_with_api_*.pkl")
+    if model_files:
+        latest_model = max(model_files, key=os.path.getctime)
+        xgboost_model = XGBoostModel(
+            model_path=latest_model,
+            feature_extractor=feature_extractor,
+            use_api_features=True
+        )
+        print(f"✓ XGBoost carregado: {latest_model}")
+except Exception as e:
+    print(f"ℹ️  XGBoost não carregado: {e}")
+
+# Inicializa ensemble (com ou sem XGBoost)
+ensemble = EnsembleModel(
+    database=database_v2,
+    include_api_predictions=True
+)
+
+if xgboost_model and xgboost_model.is_trained:
+    ensemble.add_model("xgboost", xgboost_model, weight=0.3)
+
+value_analyzer = ValueAnalyzer()
 
 
 class PredictRequest(BaseModel):
@@ -52,27 +86,58 @@ class ValueAnalysisRequest(BaseModel):
 
 @app.on_event("startup")
 async def startup():
-    print("\n" + "=" * 60)
-    print("SPORTS BETTING AI - VERSÃO PRO")
-    print("=" * 60)
-    print("Modelos: Poisson + Ensemble + XGBoost")
-    print("Análise: Valor Esperado (EV) + Kelly Criterion")
-    print("=" * 60 + "\n")
+    print("\n" + "=" * 70)
+    print("SPORTS BETTING AI - VERSÃO PRO 3.0")
+    print("=" * 70)
+    print("Modelos:")
+    print("  ✓ Poisson Distribution")
+    if xgboost_model and xgboost_model.is_trained:
+        print("  ✓ XGBoost (com features da API-Football)")
+    else:
+        print("  - XGBoost (não treinado)")
+    print("  ✓ API-Football Predictions (direto da API)")
+    print("  ✓ Ensemble (combina todos os modelos)")
+    print("\nFeatures:")
+    print("  ✓ Features básicas (21 features)")
+    print(f"  ✓ Features da API-Football ({feature_extractor.get_feature_count()} features)")
+    print("\nAnálise:")
+    print("  ✓ Valor Esperado (EV)")
+    print("  ✓ Kelly Criterion")
+    print("\nEndpoints:")
+    print("  /predict - Predição com ensemble")
+    print("  /predict-detailed - Mostra cada modelo individualmente ⭐ NOVO")
+    print("  /value-analysis - Análise de valor com odds")
+    print("=" * 70 + "\n")
     validate_config()
 
 
 @app.get("/")
 async def root():
+    models_active = ["Poisson", "API-Football Predictions", "Ensemble"]
+    if xgboost_model and xgboost_model.is_trained:
+        models_active.append("XGBoost (com features da API)")
+
     return {
         "name": "Sports Betting AI - PRO",
-        "version": "2.0.0-pro",
+        "version": "3.0.0-pro",
+        "models": models_active,
         "features": [
-            "Modelo Ensemble (Poisson + XGBoost)",
-            "Análise de Valor Esperado",
+            "⭐ API-Football Predictions (direto da API)",
+            "⭐ Features enriquecidas (47+ features)",
+            "Modelo Ensemble (Poisson + XGBoost + API)",
+            "Análise de Valor Esperado (EV)",
             "Critério de Kelly",
-            "Banco de dados SQLite",
-            "7+ mercados de apostas"
-        ]
+            "Dual-API (football-data.org + API-Football)",
+            "Banco de dados SQLite V2",
+            "10+ mercados de apostas"
+        ],
+        "endpoints": {
+            "/predict": "Predição com ensemble",
+            "/predict-detailed": "⭐ NOVO - Mostra cada modelo individualmente",
+            "/value-analysis": "Análise de valor com odds",
+            "/matches/{competition_code}": "Partidas agendadas",
+            "/standings/{competition_code}": "Classificação"
+        }
     }
 
 
@@ -204,9 +269,23 @@ async def predict(request: PredictRequest):
 
         match_stats = {"home": home_stats, "away": away_stats}
 
-        # Predição
+        # NOVO: Buscar match_id se a partida existir no banco v2
+        match_id = None
+        try:
+            from data.database_v2 import Match
+            match = database_v2.session.query(Match).filter(
+                Match.home_team.like(f"%{home_team['name']}%"),
+                Match.away_team.like(f"%{away_team['name']}%"),
+                Match.competition == comp_code
+            ).first()
+            if match:
+                match_id = match.id
+        except:
+            pass
+
+        # Predição (agora com match_id para usar features da API!)
         if request.use_ensemble:
-            predictions = ensemble.predict(match_stats)
+            predictions = ensemble.predict(match_stats, match_id=match_id)
         else:
             poisson = PoissonModel()
             predictions = poisson.predict_match(
@@ -216,17 +295,104 @@ async def predict(request: PredictRequest):
                 away_defense=away_stats["goals_conceded_avg"]
             )
 
-        return {
+        response = {
             "match": {
                 "home_team": home_team["name"],
                 "away_team": away_team["name"],
-                "competition": comp_code
+                "competition": comp_code,
+                "match_id": match_id  # Inclui match_id
             },
             "statistics": {
                 "home": home_stats,
                 "away": away_stats
             },
             "predictions": predictions
+        }
+
+        # Indica se usou features da API
+        if match_id and "api_features_used" in predictions:
+            response["api_features_used"] = predictions["api_features_used"]
+
+        return response
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(500, str(e))
+
+
+@app.post("/predict-detailed")
+async def predict_detailed(request: PredictRequest):
+    """
+    ⭐ NOVO: Predições detalhadas mostrando cada modelo individualmente
+
+    Retorna:
+    - Predições individuais de cada modelo (Poisson, XGBoost, API-Football)
+    - Predição final do ensemble
+    - Indicação de quais features da API foram usadas
+    """
+    try:
+        comp_code = request.competition.upper()
+        teams = collector.get_teams(comp_code)
+
+        home_team, away_team = None, None
+
+        for team in teams:
+            name = team.get("name", "").lower()
+            short = team.get("shortName", "").lower()
+
+            if request.home_team.lower() in name or request.home_team.lower() in short:
+                home_team = team
+            if request.away_team.lower() in name or request.away_team.lower() in short:
+                away_team = team
+
+        if not home_team or not away_team:
+            raise HTTPException(404, "Time(s) não encontrado(s)")
+
+        # Estatísticas
+        home_stats = calculate_team_stats(home_team["id"])
+        away_stats = calculate_team_stats(away_team["id"])
+        match_stats = {"home": home_stats, "away": away_stats}
+
+        # Buscar match_id
+        match_id = None
+        try:
+            from data.database_v2 import Match
+            match = database_v2.session.query(Match).filter(
+                Match.home_team.like(f"%{home_team['name']}%"),
+                Match.away_team.like(f"%{away_team['name']}%"),
+                Match.competition == comp_code
+            ).first()
+            if match:
+                match_id = match.id
+        except:
+            pass
+
+        # Predições individuais de cada modelo
+        individual_predictions = ensemble.get_model_predictions(match_stats, match_id=match_id)
+
+        # Predição combinada do ensemble
+        ensemble_prediction = ensemble.predict(match_stats, match_id=match_id)
+
+        # Verifica se tem predições da API
+        has_api_predictions = "api-football" in individual_predictions
+
+        return {
+            "match": {
+                "home_team": home_team["name"],
+                "away_team": away_team["name"],
+                "competition": comp_code,
+                "match_id": match_id
+            },
+            "statistics": {
+                "home": home_stats,
+                "away": away_stats
+            },
+            "individual_predictions": individual_predictions,
+            "ensemble_prediction": ensemble_prediction,
+            "models_used": list(individual_predictions.keys()),
+            "has_api_predictions": has_api_predictions,
+            "ensemble_weights": ensemble.weights
         }
 
     except HTTPException:

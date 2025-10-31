@@ -1,10 +1,57 @@
 """
 Sistema Ensemble - Combina múltiplos modelos de predição
+NOVO: Suporta predições da API-Football!
 """
-from typing import Dict, List
+from typing import Dict, List, Optional
 import numpy as np
 from .poisson import PoissonModel
 from .xgboost_model import XGBoostModel
+
+
+class APIFootballModel:
+    """
+    Wrapper para predições da API-Football
+    Permite usar predições da API como um "modelo" no ensemble
+    """
+
+    def __init__(self, database):
+        """
+        Args:
+            database: Instância do Database (database_v2.py)
+        """
+        self.db = database
+        self.is_trained = True  # Sempre "treinado" (usa dados da API)
+
+    def predict(self, match_id: int) -> Optional[Dict]:
+        """
+        Busca predição da API-Football para uma partida
+
+        Args:
+            match_id: ID da partida no banco de dados
+
+        Returns:
+            Predição no formato padrão, ou None se não houver
+        """
+        predictions = self.db.get_predictions(match_id=match_id)
+
+        # Filtrar apenas predições da api-football
+        api_predictions = [p for p in predictions if p.model_name == "api-football"]
+
+        if not api_predictions:
+            return None
+
+        # Pegar a predição mais recente
+        api_pred = api_predictions[-1]
+
+        return {
+            "model": "API-Football",
+            "result": {
+                "home_win": float(api_pred.home_win_prob or 0.33),
+                "draw": float(api_pred.draw_prob or 0.33),
+                "away_win": float(api_pred.away_win_prob or 0.33)
+            },
+            "source": "api-football-predictions"
+        }
 
 
 class EnsembleModel:
@@ -15,13 +62,17 @@ class EnsembleModel:
     - weighted_average: Média ponderada por pesos
     - voting: Votação majoritária
     - confidence: Baseado em confiança de cada modelo
+
+    NOVO: Suporta predições da API-Football no ensemble!
     """
 
     def __init__(
         self,
         models: Dict[str, any] = None,
         weights: Dict[str, float] = None,
-        strategy: str = "weighted_average"
+        strategy: str = "weighted_average",
+        database = None,
+        include_api_predictions: bool = False
     ):
         """
         Inicializa o ensemble
@@ -30,10 +81,14 @@ class EnsembleModel:
             models: Dicionário de modelos {nome: modelo}
             weights: Dicionário de pesos {nome: peso}
             strategy: Estratégia de combinação
+            database: Instância do Database (para buscar predições da API)
+            include_api_predictions: Se deve incluir predições da API-Football
         """
         self.models = models or {}
         self.weights = weights or {}
         self.strategy = strategy
+        self.database = database
+        self.include_api_predictions = include_api_predictions
 
         # Modelos padrão
         if not self.models:
@@ -42,11 +97,16 @@ class EnsembleModel:
                 # XGBoost será adicionado quando treinado
             }
 
+        # Adiciona modelo da API-Football se solicitado
+        if include_api_predictions and database:
+            self.models["api-football"] = APIFootballModel(database)
+
         # Pesos padrão
         if not self.weights:
             self.weights = {
-                "poisson": 0.6,
-                "xgboost": 0.4
+                "poisson": 0.5,
+                "xgboost": 0.3,
+                "api-football": 0.2
             }
 
     def add_model(self, name: str, model: any, weight: float = 1.0):
@@ -67,12 +127,13 @@ class EnsembleModel:
         if total > 0:
             self.weights = {k: v / total for k, v in self.weights.items()}
 
-    def predict(self, match_stats: Dict) -> Dict:
+    def predict(self, match_stats: Dict, match_id: int = None) -> Dict:
         """
         Faz predição combinada de todos os modelos
 
         Args:
             match_stats: Estatísticas da partida
+            match_id: ID da partida (necessário para API-Football e features)
 
         Returns:
             Predições combinadas
@@ -93,10 +154,21 @@ class EnsembleModel:
 
                 elif name == "xgboost":
                     if model.is_trained:
-                        pred = model.predict(match_stats)
+                        # Passa match_id para XGBoost poder usar features da API
+                        pred = model.predict(match_stats, match_id=match_id)
                         predictions[name] = pred
                     else:
                         print(f"Modelo {name} não treinado, pulando...")
+
+                elif name == "api-football":
+                    if match_id:
+                        pred = model.predict(match_id)
+                        if pred:
+                            predictions[name] = pred
+                        else:
+                            print(f"Predição da API-Football não disponível para match_id={match_id}")
+                    else:
+                        print("match_id necessário para buscar predições da API-Football")
 
             except Exception as e:
                 print(f"Erro ao obter predição de {name}: {e}")
@@ -247,8 +319,17 @@ class EnsembleModel:
             }
         }
 
-    def get_model_predictions(self, match_stats: Dict) -> Dict:
-        """Retorna predições individuais de cada modelo"""
+    def get_model_predictions(self, match_stats: Dict, match_id: int = None) -> Dict:
+        """
+        Retorna predições individuais de cada modelo
+
+        Args:
+            match_stats: Estatísticas da partida
+            match_id: ID da partida (necessário para API-Football)
+
+        Returns:
+            Dicionário com predições de cada modelo
+        """
         individual_predictions = {}
 
         for name, model in self.models.items():
@@ -264,8 +345,14 @@ class EnsembleModel:
 
                 elif name == "xgboost":
                     if model.is_trained:
-                        pred = model.predict(match_stats)
+                        pred = model.predict(match_stats, match_id=match_id)
                         individual_predictions[name] = pred
+
+                elif name == "api-football":
+                    if match_id:
+                        pred = model.predict(match_id)
+                        if pred:
+                            individual_predictions[name] = pred
 
             except Exception as e:
                 print(f"Erro em {name}: {e}")

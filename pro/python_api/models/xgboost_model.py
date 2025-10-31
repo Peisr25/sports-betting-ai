@@ -1,10 +1,11 @@
 """
 Modelo XGBoost para predições de apostas esportivas
+Suporta features enriquecidas com predições da API-Football
 """
 import xgboost as xgb
 import numpy as np
 import pandas as pd
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Optional
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, log_loss
 import joblib
@@ -17,28 +18,44 @@ class XGBoostModel:
 
     XGBoost (Extreme Gradient Boosting) é um algoritmo de machine learning
     de alta performance que usa ensemble de árvores de decisão.
+
+    NOVO: Suporta features enriquecidas com predições da API-Football!
+    Estratégia: Feature Engineering (recomendado)
+    - XGBoost aprende QUANDO confiar na API
+    - XGBoost aprende QUANTO peso dar a cada feature
     """
 
-    def __init__(self, model_path: str = None):
+    def __init__(
+        self,
+        model_path: str = None,
+        feature_extractor = None,
+        use_api_features: bool = True
+    ):
         """
         Inicializa o modelo XGBoost
 
         Args:
             model_path: Caminho para carregar modelo treinado
+            feature_extractor: APIPredictionFeatures para extrair features da API
+            use_api_features: Se deve usar features da API-Football
         """
         self.model = None
         self.feature_names = []
         self.is_trained = False
+        self.feature_extractor = feature_extractor
+        self.use_api_features = use_api_features
 
         if model_path and os.path.exists(model_path):
             self.load_model(model_path)
 
-    def create_features(self, match_stats: Dict) -> np.array:
+    def create_features(self, match_stats: Dict, match_id: int = None) -> np.array:
         """
         Cria features para o modelo
+        NOVO: Agora inclui features da API-Football se disponível!
 
         Args:
             match_stats: Estatísticas da partida
+            match_id: ID da partida (para buscar predições da API)
 
         Returns:
             Array de features
@@ -71,7 +88,7 @@ class XGBoostModel:
             away.get("goals_against_total", 0),
         ])
 
-        # Features derivadas
+        # Features derivadas básicas
         features.extend([
             features[0] - features[8],  # Diferença de gols marcados
             features[1] - features[9],  # Diferença de gols sofridos
@@ -79,6 +96,23 @@ class XGBoostModel:
             (features[2] + features[3] * 0.5) / max(features[5], 1),  # Pontos por jogo casa
             (features[10] + features[11] * 0.5) / max(features[13], 1),  # Pontos por jogo fora
         ])
+
+        # ⭐ NOVO: Features da API-Football (se disponível)
+        if self.use_api_features and self.feature_extractor and match_id:
+            api_features = self.feature_extractor.get_features_for_match(match_id)
+
+            # Adiciona features da API (com fallback para 0.5 se None)
+            for feature_name in self.feature_extractor.get_feature_names():
+                value = api_features.get(feature_name)
+                # Se None, usa 0.5 (neutro) para não influenciar
+                features.append(value if value is not None else 0.5)
+
+        # Se não está usando features da API mas o modelo foi treinado com elas,
+        # adiciona features neutras para manter compatibilidade
+        elif self.use_api_features and len(self.feature_names) > 21:
+            # Número de features da API = total - 21 (features básicas)
+            n_api_features = len(self.feature_names) - 21
+            features.extend([0.5] * n_api_features)
 
         return np.array(features)
 
@@ -149,12 +183,13 @@ class XGBoostModel:
 
         return metrics
 
-    def predict(self, match_stats: Dict) -> Dict:
+    def predict(self, match_stats: Dict, match_id: int = None) -> Dict:
         """
         Faz predição para uma partida
 
         Args:
             match_stats: Estatísticas da partida
+            match_id: ID da partida (para buscar features da API)
 
         Returns:
             Probabilidades de resultado
@@ -162,22 +197,30 @@ class XGBoostModel:
         if not self.is_trained:
             raise Exception("Modelo não treinado. Treine o modelo antes de fazer predições.")
 
-        # Cria features
-        features = self.create_features(match_stats)
+        # Cria features (agora com API-Football se disponível!)
+        features = self.create_features(match_stats, match_id=match_id)
         features = features.reshape(1, -1)
 
         # Predição
         probs = self.model.predict_proba(features)[0]
 
         # probs[0] = away_win, probs[1] = draw, probs[2] = home_win
-        return {
-            "model": "XGBoost",
+        result = {
+            "model": "XGBoost" + (" + API Features" if self.use_api_features else ""),
             "result": {
                 "home_win": float(probs[2]),
                 "draw": float(probs[1]),
                 "away_win": float(probs[0])
             }
         }
+
+        # Se usou features da API, indica
+        if self.use_api_features and self.feature_extractor and match_id:
+            result["api_features_used"] = True
+        else:
+            result["api_features_used"] = False
+
+        return result
 
     def predict_goals(self, match_stats: Dict) -> Dict:
         """
@@ -214,10 +257,13 @@ class XGBoostModel:
         joblib.dump({
             "model": self.model,
             "feature_names": self.feature_names,
-            "is_trained": self.is_trained
+            "is_trained": self.is_trained,
+            "use_api_features": self.use_api_features
         }, path)
 
         print(f"Modelo salvo em: {path}")
+        if self.use_api_features:
+            print("  ⭐ Modelo usa features da API-Football!")
 
     def load_model(self, path: str):
         """Carrega modelo treinado"""
@@ -225,8 +271,12 @@ class XGBoostModel:
         self.model = data["model"]
         self.feature_names = data.get("feature_names", [])
         self.is_trained = data.get("is_trained", True)
+        self.use_api_features = data.get("use_api_features", False)
 
         print(f"Modelo carregado de: {path}")
+        if self.use_api_features:
+            print("  ⭐ Modelo usa features da API-Football!")
+            print("  ℹ️  Configure o feature_extractor antes de fazer predições")
 
     def get_feature_importance(self) -> Dict:
         """Retorna importância das features"""
