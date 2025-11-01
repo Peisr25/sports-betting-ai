@@ -8,3 +8,4 @@ lite/python_api/models/__pycache__/
 pro/python_api/models/__pycache__/
 pro/python_api/analysis/__pycache__/
 pro/python_api/database/betting_v2.db
+pro/python_api/features/__pycache__/
