@@ -41,7 +41,7 @@ def test_predictions_access(api_key: str):
 
         fixtures = collector.get_fixtures(
             league_id=71,  # Brasileirão
-            season=2024,
+            season=2023,
             status="NS",  # Not Started (agendados)
         )
 

@@ -1,0 +1,192 @@
+{
+  "timestamp": "2025-10-31T20:00:01.279528",
+  "period": {
+    "from": "2025-10-31",
+    "to": "2025-11-14",
+    "days": 14
+  },
+  "summary": {
+    "leagues_tested": 29,
+    "available": 0,
+    "restricted": 29,
+    "empty": 0,
+    "total_fixtures": 0
+  },
+  "available_leagues": [],
+  "restricted_leagues": [
+    {
+      "id": 39,
+      "name": "Premier League",
+      "country": "England",
+      "error": "{'plan': 'Free plans do not have access to this season, try from 2021 to 2023.'}"
+    },
+    {
+      "id": 140,
+      "name": "La Liga",
+      "country": "Spain",
+      "error": "{'plan': 'Free plans do not have access to this season, try from 2021 to 2023.'}"
+    },
+    {
+      "id": 78,
+      "name": "Bundesliga",
+      "country": "Germany",
+      "error": "{'plan': 'Free plans do not have access to this season, try from 2021 to 2023.'}"
+    },
+    {
+      "id": 135,
+      "name": "Serie A",
+      "country": "Italy",
+      "error": "{'plan': 'Free plans do not have access to this season, try from 2021 to 2023.'}"
+    },
+    {
+      "id": 61,
+      "name": "Ligue 1",
+      "country": "France",
+      "error": "{'plan': 'Free plans do not have access to this season, try from 2021 to 2023.'}"
+    },
+    {
+      "id": 94,
+      "name": "Primeira Liga",
+      "country": "Portugal",
+      "error": "{'plan': 'Free plans do not have access to this season, try from 2021 to 2023.'}"
+    },
+    {
+      "id": 88,
+      "name": "Eredivisie",
+      "country": "Netherlands",
+      "error": "{'plan': 'Free plans do not have access to this season, try from 2021 to 2023.'}"
+    },
+    {
+      "id": 144,
+      "name": "Jupiler Pro League",
+      "country": "Belgium",
+      "error": "{'plan': 'Free plans do not have access to this season, try from 2021 to 2023.'}"
+    },
+    {
+      "id": 203,
+      "name": "Super Lig",
+      "country": "Turkey",
+      "error": "{'plan': 'Free plans do not have access to this season, try from 2021 to 2023.'}"
+    },
+    {
+      "id": 235,
+      "name": "Premier League",
+      "country": "Russia",
+      "error": "{'plan': 'Free plans do not have access to this season, try from 2021 to 2023.'}"
+    },
+    {
+      "id": 71,
+      "name": "Brasileirão Série A",
+      "country": "Brazil",
+      "error": "{'plan': 'Free plans do not have access to this season, try from 2021 to 2023.'}"
+    },
+    {
+      "id": 72,
+      "name": "Brasileirão Série B",
+      "country": "Brazil",
+      "error": "{'plan': 'Free plans do not have access to this season, try from 2021 to 2023.'}"
+    },
+    {
+      "id": 128,
+      "name": "Liga Profesional",
+      "country": "Argentina",
+      "error": "{'plan': 'Free plans do not have access to this season, try from 2021 to 2023.'}"
+    },
+    {
+      "id": 239,
+      "name": "Primera Division",
+      "country": "Colombia",
+      "error": "{'plan': 'Free plans do not have access to this season, try from 2021 to 2023.'}"
+    },
+    {
+      "id": 242,
+      "name": "Primera Division",
+      "country": "Chile",
+      "error": "{'plan': 'Free plans do not have access to this season, try from 2021 to 2023.'}"
+    },
+    {
+      "id": 253,
+      "name": "MLS",
+      "country": "USA",
+      "error": "{'plan': 'Free plans do not have access to this season, try from 2021 to 2023.'}"
+    },
+    {
+      "id": 262,
+      "name": "Liga MX",
+      "country": "Mexico",
+      "error": "{'plan': 'Free plans do not have access to this season, try from 2021 to 2023.'}"
+    },
+    {
+      "id": 307,
+      "name": "Pro League",
+      "country": "Saudi-Arabia",
+      "error": "{'plan': 'Free plans do not have access to this season, try from 2021 to 2023.'}"
+    },
+    {
+      "id": 188,
+      "name": "J1 League",
+      "country": "Japan",
+      "error": "{'plan': 'Free plans do not have access to this season, try from 2021 to 2023.'}"
+    },
+    {
+      "id": 292,
+      "name": "K League 1",
+      "country": "South-Korea",
+      "error": "{'plan': 'Free plans do not have access to this season, try from 2021 to 2023.'}"
+    },
+    {
+      "id": 2,
+      "name": "UEFA Champions League",
+      "country": "World",
+      "error": "{'plan': 'Free plans do not have access to this season, try from 2021 to 2023.'}"
+    },
+    {
+      "id": 3,
+      "name": "UEFA Europa League",
+      "country": "World",
+      "error": "{'plan': 'Free plans do not have access to this season, try from 2021 to 2023.'}"
+    },
+    {
+      "id": 848,
+      "name": "UEFA Europa Conference League",
+      "country": "World",
+      "error": "{'plan': 'Free plans do not have access to this season, try from 2021 to 2023.'}"
+    },
+    {
+      "id": 9,
+      "name": "Copa Libertadores",
+      "country": "World",
+      "error": "{'plan': 'Free plans do not have access to this season, try from 2021 to 2023.'}"
+    },
+    {
+      "id": 13,
+      "name": "Copa Sudamericana",
+      "country": "World",
+      "error": "{'plan': 'Free plans do not have access to this season, try from 2021 to 2023.'}"
+    },
+    {
+      "id": 48,
+      "name": "FA Cup",
+      "country": "England",
+      "error": "{'plan': 'Free plans do not have access to this season, try from 2021 to 2023.'}"
+    },
+    {
+      "id": 143,
+      "name": "Copa del Rey",
+      "country": "Spain",
+      "error": "{'plan': 'Free plans do not have access to this season, try from 2021 to 2023.'}"
+    },
+    {
+      "id": 137,
+      "name": "Coppa Italia",
+      "country": "Italy",
+      "error": "{'plan': 'Free plans do not have access to this season, try from 2021 to 2023.'}"
+    },
+    {
+      "id": 66,
+      "name": "Coupe de France",
+      "country": "France",
+      "error": "{'plan': 'Free plans do not have access to this season, try from 2021 to 2023.'}"
+    }
+  ]
+}

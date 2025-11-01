@@ -1,0 +1,237 @@
+{
+  "timestamp": "2025-11-01T11:56:16.138383",
+  "total_fixtures": 214,
+  "analyzed": 10,
+  "analyses": [
+    {
+      "fixture_id": 1380243,
+      "home_team": "Gyori ETO FC",
+      "away_team": "Paks",
+      "league": "NB I",
+      "status": "1H",
+      "predictions": {
+        "poisson": {
+          "result": {
+            "home_win": 0.446,
+            "draw": 0.24,
+            "away_win": 0.314
+          }
+        },
+        "ensemble": {
+          "result": {
+            "home_win": 0.446,
+            "draw": 0.24,
+            "away_win": 0.314
+          }
+        }
+      }
+    },
+    {
+      "fixture_id": 1384173,
+      "home_team": "Podbrezová",
+      "away_team": "Slovan Bratislava",
+      "league": "Super Liga",
+      "status": "1H",
+      "predictions": {
+        "poisson": {
+          "result": {
+            "home_win": 0.446,
+            "draw": 0.24,
+            "away_win": 0.314
+          }
+        },
+        "ensemble": {
+          "result": {
+            "home_win": 0.446,
+            "draw": 0.24,
+            "away_win": 0.314
+          }
+        }
+      }
+    },
+    {
+      "fixture_id": 1384174,
+      "home_team": "Tatran Prešov",
+      "away_team": "Žilina",
+      "league": "Super Liga",
+      "status": "1H",
+      "predictions": {
+        "poisson": {
+          "result": {
+            "home_win": 0.446,
+            "draw": 0.24,
+            "away_win": 0.314
+          }
+        },
+        "ensemble": {
+          "result": {
+            "home_win": 0.446,
+            "draw": 0.24,
+            "away_win": 0.314
+          }
+        }
+      }
+    },
+    {
+      "fixture_id": 1384175,
+      "home_team": "Skalica",
+      "away_team": "Ružomberok",
+      "league": "Super Liga",
+      "status": "1H",
+      "predictions": {
+        "poisson": {
+          "result": {
+            "home_win": 0.446,
+            "draw": 0.24,
+            "away_win": 0.314
+          }
+        },
+        "ensemble": {
+          "result": {
+            "home_win": 0.446,
+            "draw": 0.24,
+            "away_win": 0.314
+          }
+        }
+      }
+    },
+    {
+      "fixture_id": 1384757,
+      "home_team": "FK Jablonec",
+      "away_team": "Zlin",
+      "league": "Czech Liga",
+      "status": "1H",
+      "predictions": {
+        "poisson": {
+          "result": {
+            "home_win": 0.446,
+            "draw": 0.24,
+            "away_win": 0.314
+          }
+        },
+        "ensemble": {
+          "result": {
+            "home_win": 0.446,
+            "draw": 0.24,
+            "away_win": 0.314
+          }
+        }
+      }
+    },
+    {
+      "fixture_id": 1388383,
+      "home_team": "1. FC Heidenheim",
+      "away_team": "Eintracht Frankfurt",
+      "league": "Bundesliga",
+      "status": "1H",
+      "predictions": {
+        "poisson": {
+          "result": {
+            "home_win": 0.446,
+            "draw": 0.24,
+            "away_win": 0.314
+          }
+        },
+        "ensemble": {
+          "result": {
+            "home_win": 0.446,
+            "draw": 0.24,
+            "away_win": 0.314
+          }
+        }
+      }
+    },
+    {
+      "fixture_id": 1388384,
+      "home_team": "FSV Mainz 05",
+      "away_team": "Werder Bremen",
+      "league": "Bundesliga",
+      "status": "1H",
+      "predictions": {
+        "poisson": {
+          "result": {
+            "home_win": 0.446,
+            "draw": 0.24,
+            "away_win": 0.314
+          }
+        },
+        "ensemble": {
+          "result": {
+            "home_win": 0.446,
+            "draw": 0.24,
+            "away_win": 0.314
+          }
+        }
+      }
+    },
+    {
+      "fixture_id": 1388385,
+      "home_team": "RB Leipzig",
+      "away_team": "VfB Stuttgart",
+      "league": "Bundesliga",
+      "status": "1H",
+      "predictions": {
+        "poisson": {
+          "result": {
+            "home_win": 0.446,
+            "draw": 0.24,
+            "away_win": 0.314
+          }
+        },
+        "ensemble": {
+          "result": {
+            "home_win": 0.446,
+            "draw": 0.24,
+            "away_win": 0.314
+          }
+        }
+      }
+    },
+    {
+      "fixture_id": 1388386,
+      "home_team": "FC St. Pauli",
+      "away_team": "Borussia Mönchengladbach",
+      "league": "Bundesliga",
+      "status": "1H",
+      "predictions": {
+        "poisson": {
+          "result": {
+            "home_win": 0.446,
+            "draw": 0.24,
+            "away_win": 0.314
+          }
+        },
+        "ensemble": {
+          "result": {
+            "home_win": 0.446,
+            "draw": 0.24,
+            "away_win": 0.314
+          }
+        }
+      }
+    },
+    {
+      "fixture_id": 1388387,
+      "home_team": "Union Berlin",
+      "away_team": "SC Freiburg",
+      "league": "Bundesliga",
+      "status": "1H",
+      "predictions": {
+        "poisson": {
+          "result": {
+            "home_win": 0.446,
+            "draw": 0.24,
+            "away_win": 0.314
+          }
+        },
+        "ensemble": {
+          "result": {
+            "home_win": 0.446,
+            "draw": 0.24,
+            "away_win": 0.314
+          }
+        }
+      }
+    }
+  ]
+}

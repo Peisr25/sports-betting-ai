@@ -1,0 +1,1014 @@
+{
+  "timestamp": "2025-10-31T20:41:20.042987",
+  "total_fixtures": 28,
+  "predictions": [
+    {
+      "home_team": "San Marcos de Arica",
+      "away_team": "Rangers de Talca",
+      "prediction": "INSUFFICIENT_DATA",
+      "confidence": 0,
+      "home_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "away_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "reason": "Dados insuficientes (Casa: 0, Fora: 0)",
+      "fixture_info": {
+        "fixture_id": 1348465,
+        "date": "31/10/2025 23:00",
+        "league": "Primera B",
+        "status": "First Half (39')",
+        "current_score": "1 x 0"
+      }
+    },
+    {
+      "home_team": "Guadalajara W",
+      "away_team": "Necaxa W",
+      "prediction": "INSUFFICIENT_DATA",
+      "confidence": 0,
+      "home_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "away_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "reason": "Dados insuficientes (Casa: 0, Fora: 0)",
+      "fixture_info": {
+        "fixture_id": 1395016,
+        "date": "31/10/2025 23:00",
+        "league": "Liga MX Femenil",
+        "status": "First Half (39')",
+        "current_score": "1 x 0"
+      }
+    },
+    {
+      "home_team": "Toluca W",
+      "away_team": "Puebla W",
+      "prediction": "INSUFFICIENT_DATA",
+      "confidence": 0,
+      "home_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "away_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "reason": "Dados insuficientes (Casa: 0, Fora: 0)",
+      "fixture_info": {
+        "fixture_id": 1395017,
+        "date": "31/10/2025 23:00",
+        "league": "Liga MX Femenil",
+        "status": "First Half (39')",
+        "current_score": "1 x 1"
+      }
+    },
+    {
+      "home_team": "2 de Mayo",
+      "away_team": "Atlético Tembetary",
+      "prediction": "INSUFFICIENT_DATA",
+      "confidence": 0,
+      "home_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "away_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "reason": "Dados insuficientes (Casa: 0, Fora: 0)",
+      "fixture_info": {
+        "fixture_id": 1396920,
+        "date": "31/10/2025 23:00",
+        "league": "Division Profesional - Clausura",
+        "status": "First Half (39')",
+        "current_score": "0 x 1"
+      }
+    },
+    {
+      "home_team": "Wellington Olympic",
+      "away_team": "Western Suburbs",
+      "prediction": "INSUFFICIENT_DATA",
+      "confidence": 0,
+      "home_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "away_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "reason": "Dados insuficientes (Casa: 0, Fora: 0)",
+      "fixture_info": {
+        "fixture_id": 1477013,
+        "date": "31/10/2025 23:30",
+        "league": "National League - National",
+        "status": "First Half (7')",
+        "current_score": "0 x 0"
+      }
+    },
+    {
+      "home_team": "Deportivo La Guaira",
+      "away_team": "Monagas SC",
+      "prediction": "INSUFFICIENT_DATA",
+      "confidence": 0,
+      "home_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "away_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "reason": "Dados insuficientes (Casa: 0, Fora: 0)",
+      "fixture_info": {
+        "fixture_id": 1480978,
+        "date": "31/10/2025 23:30",
+        "league": "Primera División",
+        "status": "First Half (9')",
+        "current_score": "0 x 0"
+      }
+    },
+    {
+      "home_team": "Wanderers",
+      "away_team": "Boston River",
+      "prediction": "INSUFFICIENT_DATA",
+      "confidence": 0,
+      "home_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "away_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "reason": "Dados insuficientes (Casa: 0, Fora: 0)",
+      "fixture_info": {
+        "fixture_id": 1482524,
+        "date": "31/10/2025 23:00",
+        "league": "Primera División - Clausura",
+        "status": "First Half (40')",
+        "current_score": "0 x 1"
+      }
+    },
+    {
+      "home_team": "Coritiba",
+      "away_team": "CRB",
+      "prediction": "INSUFFICIENT_DATA",
+      "confidence": 0,
+      "home_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "away_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "reason": "Dados insuficientes (Casa: 0, Fora: 0)",
+      "fixture_info": {
+        "fixture_id": 1353600,
+        "date": "31/10/2025 22:00",
+        "league": "Serie B",
+        "status": "Second Half (78')",
+        "current_score": "0 x 0"
+      }
+    },
+    {
+      "home_team": "Atletico Goianiense",
+      "away_team": "Paysandu",
+      "prediction": "INSUFFICIENT_DATA",
+      "confidence": 0,
+      "home_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "away_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "reason": "Dados insuficientes (Casa: 0, Fora: 0)",
+      "fixture_info": {
+        "fixture_id": 1353602,
+        "date": "31/10/2025 22:00",
+        "league": "Serie B",
+        "status": "Second Half (76')",
+        "current_score": "1 x 1"
+      }
+    },
+    {
+      "home_team": "San Lorenzo",
+      "away_team": "Deportivo Riestra",
+      "prediction": "INSUFFICIENT_DATA",
+      "confidence": 0,
+      "home_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "away_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "reason": "Dados insuficientes (Casa: 0, Fora: 0)",
+      "fixture_info": {
+        "fixture_id": 1374267,
+        "date": "31/10/2025 22:00",
+        "league": "Liga Profesional Argentina",
+        "status": "Second Half (80')",
+        "current_score": "1 x 0"
+      }
+    },
+    {
+      "home_team": "Lexington W",
+      "away_team": "Sporting JAX",
+      "prediction": "INSUFFICIENT_DATA",
+      "confidence": 0,
+      "home_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "away_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "reason": "Dados insuficientes (Casa: 0, Fora: 0)",
+      "fixture_info": {
+        "fixture_id": 1446149,
+        "date": "31/10/2025 22:00",
+        "league": "USL Super League",
+        "status": "Second Half (73')",
+        "current_score": "2 x 0"
+      }
+    },
+    {
+      "home_team": "Guanabara City",
+      "away_team": "America GO",
+      "prediction": "INSUFFICIENT_DATA",
+      "confidence": 0,
+      "home_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "away_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "reason": "Dados insuficientes (Casa: 0, Fora: 0)",
+      "fixture_info": {
+        "fixture_id": 1453678,
+        "date": "31/10/2025 22:30",
+        "league": "Goiano - 3",
+        "status": "Second Half (50')",
+        "current_score": "0 x 3"
+      }
+    },
+    {
+      "home_team": "Bolívar",
+      "away_team": "San Antonio Bulo Bulo",
+      "prediction": "INSUFFICIENT_DATA",
+      "confidence": 0,
+      "home_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "away_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "reason": "Dados insuficientes (Casa: 0, Fora: 0)",
+      "fixture_info": {
+        "fixture_id": 1472376,
+        "date": "31/10/2025 22:00",
+        "league": "Copa de la División Profesional",
+        "status": "Second Half (47')",
+        "current_score": "0 x 0"
+      }
+    },
+    {
+      "home_team": "Police",
+      "away_team": "Central",
+      "prediction": "INSUFFICIENT_DATA",
+      "confidence": 0,
+      "home_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "away_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "reason": "Dados insuficientes (Casa: 0, Fora: 0)",
+      "fixture_info": {
+        "fixture_id": 1483534,
+        "date": "31/10/2025 22:00",
+        "league": "Pro League",
+        "status": "Second Half (83')",
+        "current_score": "2 x 1"
+      }
+    },
+    {
+      "home_team": "Istaravshan",
+      "away_team": "Istiqlol",
+      "prediction": "INSUFFICIENT_DATA",
+      "confidence": 0,
+      "home_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "away_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "reason": "Dados insuficientes (Casa: 0, Fora: 0)",
+      "fixture_info": {
+        "fixture_id": 1358669,
+        "date": "31/10/2025 12:00",
+        "league": "Vysshaya Liga",
+        "status": "Match Postponed",
+        "current_score": "- x -"
+      }
+    },
+    {
+      "home_team": "Thimphu City",
+      "away_team": "Transport United",
+      "prediction": "INSUFFICIENT_DATA",
+      "confidence": 0,
+      "home_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "away_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "reason": "Dados insuficientes (Casa: 0, Fora: 0)",
+      "fixture_info": {
+        "fixture_id": 1430837,
+        "date": "31/10/2025 12:00",
+        "league": "Premier League",
+        "status": "Not Started",
+        "current_score": "- x -"
+      }
+    },
+    {
+      "home_team": "JS Talangaï",
+      "away_team": "Racing Club Brazzavile",
+      "prediction": "INSUFFICIENT_DATA",
+      "confidence": 0,
+      "home_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "away_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "reason": "Dados insuficientes (Casa: 0, Fora: 0)",
+      "fixture_info": {
+        "fixture_id": 1468174,
+        "date": "31/10/2025 14:00",
+        "league": "Ligue 1",
+        "status": "Not Started",
+        "current_score": "- x -"
+      }
+    },
+    {
+      "home_team": "Attram de Visser",
+      "away_team": "Great Olympics",
+      "prediction": "INSUFFICIENT_DATA",
+      "confidence": 0,
+      "home_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "away_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "reason": "Dados insuficientes (Casa: 0, Fora: 0)",
+      "fixture_info": {
+        "fixture_id": 1478619,
+        "date": "31/10/2025 15:00",
+        "league": "Division One League",
+        "status": "Not Started",
+        "current_score": "- x -"
+      }
+    },
+    {
+      "home_team": "Renaissance Berkane",
+      "away_team": "Raja Casablanca",
+      "prediction": "INSUFFICIENT_DATA",
+      "confidence": 0,
+      "home_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "away_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "reason": "Dados insuficientes (Casa: 0, Fora: 0)",
+      "fixture_info": {
+        "fixture_id": 1484333,
+        "date": "31/10/2025 15:00",
+        "league": "Botola Pro",
+        "status": "Match Postponed",
+        "current_score": "- x -"
+      }
+    },
+    {
+      "home_team": "Inter Sibiu",
+      "away_team": "Păușești",
+      "prediction": "INSUFFICIENT_DATA",
+      "confidence": 0,
+      "home_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "away_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "reason": "Dados insuficientes (Casa: 0, Fora: 0)",
+      "fixture_info": {
+        "fixture_id": 1474115,
+        "date": "31/10/2025 16:00",
+        "league": "Liga III - Serie 6",
+        "status": "Not Started",
+        "current_score": "- x -"
+      }
+    },
+    {
+      "home_team": "Spartak Myjava",
+      "away_team": "Komárno II",
+      "prediction": "INSUFFICIENT_DATA",
+      "confidence": 0,
+      "home_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "away_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "reason": "Dados insuficientes (Casa: 0, Fora: 0)",
+      "fixture_info": {
+        "fixture_id": 1422388,
+        "date": "31/10/2025 17:00",
+        "league": "3. liga - West",
+        "status": "Not Started",
+        "current_score": "- x -"
+      }
+    },
+    {
+      "home_team": "Hertha Zehlendorf",
+      "away_team": "BSG Chemie Leipzig",
+      "prediction": "INSUFFICIENT_DATA",
+      "confidence": 0,
+      "home_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "away_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "reason": "Dados insuficientes (Casa: 0, Fora: 0)",
+      "fixture_info": {
+        "fixture_id": 1407578,
+        "date": "31/10/2025 18:00",
+        "league": "Regionalliga - Nordost",
+        "status": "Match Postponed",
+        "current_score": "- x -"
+      }
+    },
+    {
+      "home_team": "Siegendorf",
+      "away_team": "Leithaprodersdorf",
+      "prediction": "INSUFFICIENT_DATA",
+      "confidence": 0,
+      "home_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "away_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "reason": "Dados insuficientes (Casa: 0, Fora: 0)",
+      "fixture_info": {
+        "fixture_id": 1463807,
+        "date": "31/10/2025 18:00",
+        "league": "Landesliga - Burgenland",
+        "status": "Not Started",
+        "current_score": "- x -"
+      }
+    },
+    {
+      "home_team": "Bruck an der Mur",
+      "away_team": "Tillmitsch",
+      "prediction": "INSUFFICIENT_DATA",
+      "confidence": 0,
+      "home_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "away_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "reason": "Dados insuficientes (Casa: 0, Fora: 0)",
+      "fixture_info": {
+        "fixture_id": 1465021,
+        "date": "31/10/2025 18:00",
+        "league": "Landesliga - Steiermark",
+        "status": "Not Started",
+        "current_score": "- x -"
+      }
+    },
+    {
+      "home_team": "KFC Uerdingen 05",
+      "away_team": "Germania Ratingen",
+      "prediction": "INSUFFICIENT_DATA",
+      "confidence": 0,
+      "home_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "away_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "reason": "Dados insuficientes (Casa: 0, Fora: 0)",
+      "fixture_info": {
+        "fixture_id": 1405876,
+        "date": "31/10/2025 18:30",
+        "league": "Oberliga - Niederrhein",
+        "status": "Match Postponed",
+        "current_score": "- x -"
+      }
+    },
+    {
+      "home_team": "Vortuna Bad Leonfelden",
+      "away_team": "Union Vöcklamarkt",
+      "prediction": "INSUFFICIENT_DATA",
+      "confidence": 0,
+      "home_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "away_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "reason": "Dados insuficientes (Casa: 0, Fora: 0)",
+      "fixture_info": {
+        "fixture_id": 1464537,
+        "date": "31/10/2025 18:30",
+        "league": "Landesliga - Oberosterreich",
+        "status": "Not Started",
+        "current_score": "- x -"
+      }
+    },
+    {
+      "home_team": "Wolves U21",
+      "away_team": "West Ham United U21",
+      "prediction": "INSUFFICIENT_DATA",
+      "confidence": 0,
+      "home_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "away_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "reason": "Dados insuficientes (Casa: 0, Fora: 0)",
+      "fixture_info": {
+        "fixture_id": 1434403,
+        "date": "31/10/2025 19:00",
+        "league": "Premier League 2 Division One",
+        "status": "Match Postponed",
+        "current_score": "- x -"
+      }
+    },
+    {
+      "home_team": "Corí-Sabbá",
+      "away_team": "Teresina Esporte Club",
+      "prediction": "INSUFFICIENT_DATA",
+      "confidence": 0,
+      "home_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "away_stats": {
+        "matches_found": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_scored": 0,
+        "goals_conceded": 0,
+        "win_rate": 0,
+        "avg_goals_scored": 0,
+        "avg_goals_conceded": 0
+      },
+      "reason": "Dados insuficientes (Casa: 0, Fora: 0)",
+      "fixture_info": {
+        "fixture_id": 1484348,
+        "date": "31/10/2025 23:00",
+        "league": "Piauiense - 2",
+        "status": "Not Started",
+        "current_score": "- x -"
+      }
+    }
+  ]
+}
