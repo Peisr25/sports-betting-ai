@@ -140,9 +140,12 @@ def step2_get_api_predictions(self, fixture: Dict) -> Optional[Dict]:
 ### STEP 3: Buscar Confrontos Diretos (H2H)
 
 ```python
-def step3_get_h2h(self, home_team_id: int, away_team_id: int, limit: int = 5) -> List[Dict]:
+def step3_get_h2h(self, home_team_id: int, away_team_id: int) -> List[Dict]:
     """
-    Busca últimos 5 confrontos diretos entre os times
+    Busca confrontos diretos entre os times (últimos 2 anos)
+
+    IMPORTANTE: Free tier não suporta parâmetro 'last'
+    Solução: Usa 'from/to' com range de 2 anos
 
     Importante para:
     - Histórico de confrontos
@@ -151,9 +154,13 @@ def step3_get_h2h(self, home_team_id: int, away_team_id: int, limit: int = 5) ->
     """
 ```
 
-**Endpoint:** `GET /fixtures/headtohead?h2h={team1}-{team2}&last=5`
+**Endpoint (FREE TIER):** `GET /fixtures/headtohead?h2h={team1}-{team2}&from=2023-11-01&to=2025-11-01`
 
-**Output:** Lista de 5 últimas partidas entre os times
+**❌ NÃO FUNCIONA:** `&last=5` (bloqueado no free tier)
+
+**✅ FUNCIONA:** `&from=YYYY-MM-DD&to=YYYY-MM-DD` (range de datas)
+
+**Output:** Lista de TODOS os confrontos dos últimos 2 anos (geralmente 5-15 jogos)
 
 **Exemplo:**
 ```json
@@ -182,7 +189,10 @@ def step3_get_h2h(self, home_team_id: int, away_team_id: int, limit: int = 5) ->
 ```python
 def step4_get_team_last_matches(self, team_id: int, limit: int = 10) -> List[Dict]:
     """
-    Busca últimas 10 partidas de cada time
+    Busca últimas partidas de cada time (último ano)
+
+    IMPORTANTE: Free tier não suporta parâmetro 'last'
+    Solução: Usa 'from/to' com 1 ano + limitação manual
 
     Importante para:
     - Forma recente
@@ -192,9 +202,13 @@ def step4_get_team_last_matches(self, team_id: int, limit: int = 10) -> List[Dic
     """
 ```
 
-**Endpoint:** `GET /fixtures?team={team_id}&last=10&status=FT`
+**Endpoint (FREE TIER):** `GET /fixtures?team={team_id}&from=2024-11-01&to=2025-11-01&status=FT`
 
-**Output:** Lista de 10 últimas partidas finalizadas
+**❌ NÃO FUNCIONA:** `&last=10` (bloqueado no free tier)
+
+**✅ FUNCIONA:** `&from=YYYY-MM-DD&to=YYYY-MM-DD&status=FT` (range de datas)
+
+**Output:** Lista de TODAS as partidas do último ano (limitado manualmente às últimas 10)
 
 **Estatísticas calculadas:**
 ```python
@@ -744,6 +758,31 @@ Para cada partida:
 
 ## 🔧 Troubleshooting
 
+### Erro: "Free plans do not have access to the Last parameter"
+
+**Causa:** Free tier não suporta parâmetro `last` em endpoints H2H e fixtures
+
+**Sintoma:**
+```
+⚠️ API Warning: {'plan': 'Free plans do not have access to the Last parameter.'}
+```
+
+**Solução:** ✅ JÁ CORRIGIDO NO CÓDIGO!
+
+O pipeline agora usa automaticamente:
+- **H2H:** `from/to` com últimos 2 anos
+- **Team History:** `from/to` com último ano
+
+**Verificação:**
+```bash
+# Verifique se o código está atualizado
+grep -n "from_date" betting_pipeline.py
+
+# Deve mostrar linhas 205 e 245 com timedelta
+```
+
+---
+
 ### Erro: "API quota exceeded"
 
 **Causa:** Excedeu limite de 100 req/dia
@@ -753,6 +792,8 @@ Para cada partida:
 # Reduza o número de fixtures
 pipeline.run(max_fixtures=5)  # Ao invés de 10
 ```
+
+---
 
 ### Erro: "XGBoost model not found"
 

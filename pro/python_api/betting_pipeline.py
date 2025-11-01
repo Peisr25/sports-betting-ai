@@ -7,11 +7,17 @@ Este script implementa o fluxo completo:
 1. Busca partidas AO VIVO e próximas
 2. Para cada partida:
    - Busca predições da API-Football
-   - Busca H2H (últimos 5 confrontos diretos)
-   - Busca últimas 10 partidas de cada time
+   - Busca H2H (todos os confrontos dos últimos 2 anos)
+   - Busca últimas 10 partidas de cada time (do último ano)
    - Salva TUDO no banco (evitando duplicatas)
 3. Processa com modelos (Poisson + XGBoost + Ensemble)
 4. Gera output final JSON com todas apostas possíveis
+
+IMPORTANTE - FREE TIER:
+- Não suporta parâmetro 'last' nos endpoints
+- Solução: Usa 'from/to' com ranges de data
+- H2H: Últimos 2 anos (completo)
+- Team history: Último ano (limitado manualmente a 10)
 
 Uso:
     python betting_pipeline.py
@@ -185,22 +191,30 @@ class BettingPipeline:
 
         return None
 
-    def step3_get_h2h(self, home_team_id: int, away_team_id: int, limit: int = 5) -> List[Dict]:
+    def step3_get_h2h(self, home_team_id: int, away_team_id: int) -> List[Dict]:
         """
         STEP 3: Busca H2H (últimos confrontos diretos)
+
+        IMPORTANTE: Free tier não suporta parâmetro 'last'
+        Solução: Usar 'from/to' com range de 2 anos
 
         Args:
             home_team_id: ID do time da casa
             away_team_id: ID do time visitante
-            limit: Número de confrontos
 
         Returns:
-            Lista de confrontos H2H
+            Lista de confrontos H2H (últimos 2 anos)
         """
         try:
+            # Últimos 2 anos de confrontos (free tier compatible)
+            today = datetime.now()
+            from_date = (today - timedelta(days=730)).strftime("%Y-%m-%d")
+            to_date = today.strftime("%Y-%m-%d")
+
             params = {
                 "h2h": f"{home_team_id}-{away_team_id}",
-                "last": limit
+                "from": from_date,  # ✅ Free tier compatible
+                "to": to_date       # ✅ Free tier compatible
             }
             data = self.collector._make_request("fixtures/headtohead", params)
 
@@ -208,43 +222,57 @@ class BettingPipeline:
 
             if h2h:
                 self.stats["h2h_fetched"] += 1
-                print(f"      ✓ {len(h2h)} confrontos H2H obtidos")
+                print(f"      ✓ {len(h2h)} confrontos H2H obtidos (últimos 2 anos)")
 
             return h2h
 
         except Exception as e:
             print(f"      ⚠️  Erro ao buscar H2H: {e}")
+            self.stats["errors"] += 1
             return []
 
     def step4_get_team_last_matches(self, team_id: int, limit: int = 10) -> List[Dict]:
         """
         STEP 4: Busca últimas partidas de um time
 
+        IMPORTANTE: Free tier não suporta parâmetro 'last'
+        Solução: Usar 'from/to' com range de 1 ano e limitar manualmente
+
         Args:
             team_id: ID do time
-            limit: Número de partidas
+            limit: Número de partidas a retornar (limitação manual)
 
         Returns:
-            Lista de partidas
+            Lista de partidas (últimas N do último ano)
         """
         try:
+            # Último ano de partidas (free tier compatible)
+            today = datetime.now()
+            from_date = (today - timedelta(days=365)).strftime("%Y-%m-%d")
+            to_date = today.strftime("%Y-%m-%d")
+
             params = {
                 "team": team_id,
-                "last": limit,
-                "status": "FT"  # Finalizadas
+                "from": from_date,  # ✅ Free tier compatible
+                "to": to_date,      # ✅ Free tier compatible
+                "status": "FT"      # Finalizadas
             }
             data = self.collector._make_request("fixtures", params)
 
             matches = data.get("response", [])
 
             if matches:
+                # Limitar manualmente às últimas N partidas
+                matches = matches[-limit:] if len(matches) > limit else matches
+
                 self.stats["team_history_fetched"] += 1
-                print(f"      ✓ {len(matches)} partidas históricas obtidas")
+                print(f"      ✓ {len(matches)} partidas históricas obtidas (último ano)")
 
             return matches
 
         except Exception as e:
             print(f"      ⚠️  Erro ao buscar histórico: {e}")
+            self.stats["errors"] += 1
             return []
 
     def step5_save_to_database(self, fixture: Dict, api_prediction: Optional[Dict] = None) -> Optional[int]:
@@ -606,7 +634,7 @@ class BettingPipeline:
 
         # STEP 3: H2H
         print(f"\n   🤝 STEP 3: Buscando confrontos diretos (H2H)...")
-        h2h = self.step3_get_h2h(home_team_id, away_team_id, limit=5)
+        h2h = self.step3_get_h2h(home_team_id, away_team_id)  # Free tier: últimos 2 anos
         result["h2h"] = h2h
         result["h2h_count"] = len(h2h)
 
